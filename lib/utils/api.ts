@@ -1,4 +1,4 @@
-export async function getData(url: string) {
+export async function getData<T>(url: string): Promise<T> {
   try {
     const response: Response = await fetch(url);
     if (!response.ok) {
@@ -13,5 +13,6 @@ export async function getData(url: string) {
     } else {
       console.error('Unknown error occurred');
     }
+    throw error;
   }
 }

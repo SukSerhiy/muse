@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import '@/assets/styles/globals.css';
 import { APP_NAME, SERVER_URL } from '@/lib/constants';
 import { ThemeProvider } from 'next-themes';
+import { NextIntlClientProvider, hasLocale } from 'next-intl';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,7 +30,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>
