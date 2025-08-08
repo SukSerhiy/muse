@@ -3,16 +3,16 @@ import { Inter } from 'next/font/google';
 import '@/assets/styles/globals.css';
 import { APP_NAME, SERVER_URL } from '@/lib/constants';
 import { ThemeProvider } from 'next-themes';
-import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Prostore',
+    template: '%s | Muse',
     default: APP_NAME,
   },
-  description: 'A modern ecommerce platform built with NextJS',
+  description: 'A modern deezer-based project for music searching',
   metadataBase: new URL(SERVER_URL),
 };
 
