@@ -15,7 +15,6 @@ import {
 export default async function Page() {
   const chartsData = await getCharts();
   const { data: albums } = chartsData.albums;
-  console.log('albums', albums);
 
   const t = await getTranslations();
 

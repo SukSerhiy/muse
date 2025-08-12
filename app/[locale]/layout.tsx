@@ -4,6 +4,7 @@ import '@/assets/styles/globals.css';
 import { APP_NAME, SERVER_URL } from '@/lib/constants';
 import { ThemeProvider } from 'next-themes';
 import { NextIntlClientProvider } from 'next-intl';
+import Provider from '@/components/Provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,7 +31,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider>
+            <Provider>{children}</Provider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

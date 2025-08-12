@@ -1,11 +1,15 @@
-'use client'
+'use client';
+
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 import Link from 'next/link';
 import { APP_NAME } from '@/lib/constants';
 import ModeToggle from './mode-toggle';
+import { useSession } from 'next-auth/react';
 
 const Header = () => {
+  const { data: session, status } = useSession();
+
   return (
     <header>
       <div className="py-3 px-2">
@@ -21,6 +25,7 @@ const Header = () => {
             />
             <span className="text-2xl font-bold text-slate-600">Muse</span>
           </Link>
+          {status === 'loading' ? null : session?.user ? 'In' : 'Out'}
           <ModeToggle />
         </div>
       </div>

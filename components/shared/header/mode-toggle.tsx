@@ -1,7 +1,8 @@
+'use client'
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
-import { SunIcon, MoonIcon, SunMoon } from 'lucide-react';
+import { SunIcon, MoonIcon } from 'lucide-react';
 
 const ModeToggle = () => {
   const [mounted, setMounted] = useState(false);
