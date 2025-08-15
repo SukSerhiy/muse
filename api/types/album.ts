@@ -19,4 +19,5 @@ export interface IAlbumTrack {
   id: number;
   title?: string | null;
   preview?: string | null;
+  duration?: number | null;
 }

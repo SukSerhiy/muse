@@ -4,7 +4,7 @@ import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 import Link from 'next/link';
 import { APP_NAME } from '@/lib/constants';
-import ModeToggle from './mode-toggle';
+import ModeToggle from './ModeToggle';
 import { useSession } from 'next-auth/react';
 
 const Header = () => {

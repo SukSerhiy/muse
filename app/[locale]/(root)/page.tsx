@@ -1,20 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { getCharts } from '@/api';
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import Albums from '@/components/pages/home/Albums';
+import TrackQueue from '@/components/shared/tracks/TrackQueue';
 
 export default async function Page() {
   const chartsData = await getCharts();
   const { data: albums } = chartsData.albums;
+
+  const { data: tracks } = chartsData.tracks;
 
   const t = await getTranslations();
 
@@ -22,19 +15,10 @@ export default async function Page() {
     <div>
       <h1 className="text-3xl font-bold">{t('ChartsPage.title')}</h1>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-        {albums?.map((item) => (
-          <Card key={item.id} className="w-full">
-            <CardHeader>
-              <div>
-                <CardTitle>{item.title}</CardTitle>
-                <CardDescription>{item.artist?.name}</CardDescription>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <img src={item.cover_medium || ''} alt="album" />
-            </CardContent>
-          </Card>
-        ))}
+        <Albums albums={albums} />
+      </div>
+      <div className="max-w-4xl mx-auto my-3">
+        <TrackQueue tracks={tracks} />
       </div>
     </div>
   );

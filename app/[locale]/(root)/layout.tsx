@@ -1,4 +1,4 @@
-import Header from '@/components/shared/header';
+import Header from "@/components/shared/header";
 
 export default function RootLayout({
   children,
@@ -8,7 +8,9 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      <main className="mt-3 px-1 md:px-3">{children}</main>
+      <main className="mt-3 px-1 md:px-3">
+        {children}
+      </main>
     </>
   );
 }

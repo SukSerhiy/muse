@@ -1,19 +1,21 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import '@/assets/styles/globals.css';
-import { APP_NAME, SERVER_URL } from '@/lib/constants';
-import { ThemeProvider } from 'next-themes';
-import { NextIntlClientProvider } from 'next-intl';
-import Provider from '@/components/Provider';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "@/assets/styles/globals.css";
+import { APP_NAME, SERVER_URL } from "@/lib/constants";
+import { ThemeProvider } from "next-themes";
+import { NextIntlClientProvider } from "next-intl";
+import SessionProvider from "@/components/context/SessionProvider";
+import { PlayerProvider } from "@/components/context/PlayerProvider";
+import Player from "@/components/shared/Player";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Muse',
+    template: "%s | Muse",
     default: APP_NAME,
   },
-  description: 'A modern deezer-based project for music searching',
+  description: "A modern deezer-based project for music searching",
   metadataBase: new URL(SERVER_URL),
 };
 
@@ -32,7 +34,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider>
-            <Provider>{children}</Provider>
+            <SessionProvider>
+              <PlayerProvider>
+                {children}
+                <Player />
+              </PlayerProvider>
+            </SessionProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
