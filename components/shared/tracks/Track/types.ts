@@ -1,6 +1,6 @@
-import { IChartTrack } from '@/api/types/charts';
+import { Track } from "@/lib/types/track";
 
 export interface ITrack {
-  track: IChartTrack;
-  onPlay: (track: IChartTrack) => void;
+  track: Track;
+  onPlay: (track: Track) => void;
 }

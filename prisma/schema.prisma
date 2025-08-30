@@ -15,10 +15,39 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  email     String?   @unique
+  username  String?   @unique
+  password  String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  Like      Like[]
+}
+
+model Track {
+  id             BigInt    @id
+  title          String
+  coverSmall     String?
+  coverBig       String?
+  preview        String?
+  artistSourceId Int?
+  artistName     String?
+  albumSourceId  Int?
+  albumTitle     String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
+  Like           Like[]
+}
+
+model Like {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  trackId   BigInt
+  user      User      @relation(fields: [userId], references: [id])
+  track     Track     @relation(fields: [trackId], references: [id])
+  isDislike Boolean?  @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@unique([userId, trackId])
 }

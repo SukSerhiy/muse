@@ -1,7 +1,9 @@
-import { getTranslations } from 'next-intl/server';
-import { getCharts } from '@/api';
-import Albums from '@/components/pages/home/Albums';
-import TrackQueue from '@/components/shared/tracks/TrackQueue';
+import { getTranslations } from "next-intl/server";
+import { getCharts } from '@/lib/external/services';
+import Albums from "@/components/pages/home/Albums";
+import TrackQueue from "@/components/shared/tracks/TrackQueue";
+import { db } from "@/lib/db";
+import { Like } from '@/lib/types/track';
 
 export default async function Page() {
   const chartsData = await getCharts();
@@ -9,16 +11,30 @@ export default async function Page() {
 
   const { data: tracks } = chartsData.tracks;
 
+  const likes = await db.like.findMany();
+
+  const tracksWithLikes = tracks.map((item) => {
+    const trackLike = likes.find((l) => l.trackId === item.id);
+    let currentLike: Like | null = null;
+    if (trackLike) {
+      currentLike = trackLike.isDislike ? 'dislike' : 'like';
+    }
+    return {
+      ...item,
+      like: currentLike,
+    }
+  });
+
   const t = await getTranslations();
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">{t('ChartsPage.title')}</h1>
+      <h1 className="text-3xl font-bold">{t("ChartsPage.title")}</h1>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
         <Albums albums={albums} />
       </div>
-      <div className="max-w-4xl mx-auto my-3">
-        <TrackQueue tracks={tracks} />
+      <div className="mx-auto my-3 max-w-4xl">
+        <TrackQueue tracks={tracksWithLikes} />
       </div>
     </div>
   );

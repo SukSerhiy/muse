@@ -1,30 +1,59 @@
-'use client'
-import { FC } from 'react';
-import { PlayIcon, PauseIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+"use client";
+import { FC, useTransition, useOptimistic } from "react";
+import { PlayIcon, PauseIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { usePlayer } from "@/components/context/PlayerProvider";
-import { ITrack } from './types';
+import LikeButton from "@/components/shared/LikeButton";
+import { likeTrack } from "@/lib/actions/track.actions";
+import { ITrack } from "./types";
 
 const Track: FC<ITrack> = ({ track, onPlay }) => {
-  const {
-    tracks,
-    setTracks,
-    isPlaying,
-    setIsPlaying,
-    currentTrackId,
-    setCurrentTrackId,
-  } = usePlayer();
+  const { isPlaying, currentTrackOpts, optimisticTracks, setLike } =
+    usePlayer();
 
-  const isActive = currentTrackId === track.id && isPlaying;
+  const [isPending, startTransition] = useTransition();
+
+  const isActive = currentTrackOpts?.id === track.id;
+
+  const [optimisticLike, setOptimisticLike] = useOptimistic(track.like);
+
+  const currOptimLike = isActive
+    ? optimisticTracks.find((item) => item.id === track.id)?.like
+    : optimisticLike;
+
+  const handleLike = (isDislike?: boolean) => {
+    startTransition(async () => {
+      if (!track) return;
+      const newLike = isDislike ? "dislike" : "like";
+      if (isActive) {
+        setLike(track.id, currOptimLike === newLike ? null : newLike);
+      } else {
+        setOptimisticLike(currOptimLike === newLike ? null : newLike)
+      }
+      await likeTrack(track, isDislike);
+    });
+  };
 
   return (
-    <div className="flex items-center gap-3 border-2 rounded-xs p-1.5">
-      <Button className="rounded-full" variant="ghost" onClick={() => onPlay(track)}>
-        {isActive ? <PauseIcon /> : <PlayIcon />}
+    <div className="flex items-center gap-3 rounded-xs border-2 p-1.5">
+      <Button
+        className="rounded-full"
+        variant="ghost"
+        onClick={() => onPlay(track)}
+      >
+        {isActive && isPlaying ? <PauseIcon /> : <PlayIcon />}
       </Button>
       <span>{track.title}</span>
-      <div className="ml-auto">
-        
+      <div className="ml-auto flex items-center gap-3">
+        <LikeButton
+          isActive={currOptimLike === "dislike"}
+          isDislike
+          onClick={() => handleLike(true)}
+        />
+        <LikeButton
+          isActive={currOptimLike === "like"}
+          onClick={() => handleLike(false)}
+        />
       </div>
     </div>
   );

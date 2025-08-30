@@ -1,7 +1,7 @@
 import { DEEZER_API_HOST } from '@/lib/constants';
-import { getData } from '@/lib/utils/api';
+import { getData } from './utils';
 import { endpoints } from './endpoints';
-import { ICharts, IAlbum, IArtist, ISearchResults } from './types';
+import { ICharts, IAlbum, IArtist, ISearchResults } from '../types';
 
 export const getCharts = () =>
   getData<ICharts>(`${DEEZER_API_HOST}/${endpoints.CHART}`);

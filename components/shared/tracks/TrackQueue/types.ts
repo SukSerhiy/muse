@@ -1,5 +1,5 @@
-import { IChartTrack } from '@/api/types/charts';
+import { Track } from '@/lib/types/track'
 
 export interface ITrackQueue {
-  tracks: IChartTrack[];
+  tracks: Track[];
 }
