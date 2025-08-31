@@ -7,6 +7,7 @@ import { NextIntlClientProvider } from "next-intl";
 import SessionProvider from "@/components/context/SessionProvider";
 import { PlayerProvider } from "@/components/context/PlayerProvider";
 import Player from "@/components/shared/Player";
+import { getMessages, getLocale } from "next-intl/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +20,16 @@ export const metadata: Metadata = {
   metadataBase: new URL(SERVER_URL),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
@@ -33,7 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
             <SessionProvider>
               <PlayerProvider>
                 {children}
