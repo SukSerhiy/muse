@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { getCharts } from '@/lib/external/services';
 import Albums from "@/components/pages/home/Albums";
-import TrackQueue from "@/components/shared/tracks/TrackQueue";
+import TrackQueue from "@/components/shared/TrackQueue";
 import { db } from "@/lib/db";
 import { Like } from '@/lib/types/track';
 
