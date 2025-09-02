@@ -1,7 +1,8 @@
-import { db } from '@/lib/db';
-import { NextResponse } from 'next/server';
 import { hash } from 'bcrypt';
+import { NextResponse } from 'next/server';
 import * as z from 'zod';
+
+import { db } from '@/lib/db';
 
 // Define a schema for input validation
 const userSchema = z.object({

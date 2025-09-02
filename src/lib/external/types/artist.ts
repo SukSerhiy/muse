@@ -1,4 +1,4 @@
-export interface IArtist {
+export type IArtist = {
   id: number;
   name?: string | null;
   link?: string | null;

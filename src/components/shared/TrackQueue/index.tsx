@@ -1,11 +1,13 @@
-"use client";
-import { FC, useEffect, useRef, useState, useTransition } from "react";
-import { usePlayer } from "@/components/context/PlayerProvider";
-import { Track as TrackType } from "@/lib/types/track";
-import { Button } from "@/components/ui/button";
-import { refresh } from "@/lib/actions/track.actions";
-import Track from "../Track";
-import { ITrackQueue } from "./types";
+'use client';
+import { FC, useEffect, useRef, useState, useTransition } from 'react';
+
+import { usePlayer } from '@/components/context/PlayerProvider';
+import { Button } from '@/components/ui/button';
+import { refresh } from '@/lib/actions/track.actions';
+import { Track as TrackType } from '@/lib/types/track';
+
+import Track from '../Track';
+import { ITrackQueue } from './types';
 
 const TrackQueue: FC<ITrackQueue> = ({ tracks: serverTracks }) => {
   const {

@@ -1,9 +1,9 @@
-export interface ISearchResults {
+export type ISearchResults = {
   data: ISearchTrack[];
   total: number;
 }
 
-export interface ISearchTrack {
+export type ISearchTrack = {
   id: number;
   title?: string | null;
   artist: {

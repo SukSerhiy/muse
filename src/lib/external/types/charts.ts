@@ -15,7 +15,7 @@ export type ICharts = {
   }
 }
 
-export interface IChartAlbum {
+export type IChartAlbum = {
   id: number;
   title?: string | null;
   link?: string | null;
@@ -31,7 +31,7 @@ export interface IChartAlbum {
   };
 }
 
-export interface IChartArtist {
+export type IChartArtist = {
   id: number;
   name?: string | null;
   link?: string | null;

@@ -1,14 +1,15 @@
 // TODO: Убрать хардкод с userId
-"use server";
+'use server';
 
 // import { getServerSession } from 'next-auth';
-import { revalidatePath } from "next/cache";
-import { Track } from "@/lib/types/track";
-import { db } from "@/lib/db";
+import { revalidatePath } from 'next/cache';
+
+import { db } from '@/lib/db';
+import { Track } from '@/lib/types/track';
 
 // Temporary, needs to be removed
 export async function refresh() {
-  revalidatePath("/", "layout");
+  revalidatePath('/', 'layout');
 }
 
 export async function likeTrack(track: Track, isDislike?: boolean) {
@@ -48,5 +49,5 @@ export async function likeTrack(track: Track, isDislike?: boolean) {
     });
   }
 
-  revalidatePath("/", "layout");
+  revalidatePath('/', 'layout');
 }

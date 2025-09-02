@@ -1,4 +1,4 @@
-export interface IconButtonsProps {
+export type IconButtonsProps = {
   isPlaying: boolean;
   onPlayPause: () => void;
   onPrev: () => void;

@@ -1,5 +1,5 @@
-import { Track } from '@/lib/types/track'
+import { Track } from '@/lib/types/track';
 
-export interface ITrackQueue {
+export type ITrackQueue = {
   tracks: Track[];
 }

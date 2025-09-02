@@ -1,9 +1,9 @@
-import type { ICharts } from "./charts";
-import type { IAlbum } from "./album";
-import type { IArtist } from "./artist";
-import type { ISearchResults } from "./search";
+import type { IAlbum } from './album';
+import type { IArtist } from './artist';
+import type { ICharts } from './charts';
+import type { ISearchResults } from './search';
 
-export interface ITrack {
+export type ITrack = {
   id: number;
   title?: string | null;
   title_short?: string | null;

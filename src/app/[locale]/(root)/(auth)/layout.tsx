@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 
-interface AuthLayoutProps {
+type AuthLayoutProps = {
   children: ReactNode;
 }
 

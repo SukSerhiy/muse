@@ -10,7 +10,7 @@ export const getCharts = () => api.getCharts().then((res) => {
       ...res.tracks,
       data: mappedTracks,
     }
-  }
+  };
 });
 
 export const getAlbum = (id: number) => api.getAlbum(id);

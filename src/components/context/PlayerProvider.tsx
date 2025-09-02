@@ -1,21 +1,22 @@
-"use client";
-import { Track, Like } from "@/lib/types/track";
+'use client';
 import {
-  ReactNode,
-  useState,
   createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
   useContext,
   useOptimistic,
-  Dispatch,
-  SetStateAction,
-} from "react";
+  useState,
+} from 'react';
+
+import { Like, Track } from '@/lib/types/track';
 
 type CurrentTrackOpts = {
   id: bigint;
   preview?: string | null;
 }
 
-interface IPlayer {
+type IPlayer = {
   tracks: Track[];
   optimisticTracks: Track[];
   setTracks: (tracks: Track[]) => void;
@@ -48,7 +49,7 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   const [optimisticTracks, setOptimisticTracks] =
     useOptimistic<Track[]>(tracks);
 
-  console.log("optimisticTracks", optimisticTracks);
+  console.log('optimisticTracks', optimisticTracks);
 
   const handleLike = (id: bigint, like: Like | null) => {
     setOptimisticTracks((prev) =>

@@ -1,11 +1,13 @@
-"use client";
-import { FC, useTransition, useOptimistic } from "react";
-import { PlayIcon, PauseIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { usePlayer } from "@/components/context/PlayerProvider";
-import LikeButton from "@/components/shared/LikeButton";
-import { likeTrack } from "@/lib/actions/track.actions";
-import { ITrack } from "./types";
+'use client';
+import { PauseIcon, PlayIcon } from 'lucide-react';
+import { FC, useOptimistic, useTransition } from 'react';
+
+import { usePlayer } from '@/components/context/PlayerProvider';
+import LikeButton from '@/components/shared/LikeButton';
+import { Button } from '@/components/ui/button';
+import { likeTrack } from '@/lib/actions/track.actions';
+
+import { ITrack } from './types';
 
 const Track: FC<ITrack> = ({ track, onPlay }) => {
   const { isPlaying, currentTrackOpts, optimisticTracks, setLike } =
@@ -24,11 +26,11 @@ const Track: FC<ITrack> = ({ track, onPlay }) => {
   const handleLike = (isDislike?: boolean) => {
     startTransition(async () => {
       if (!track) return;
-      const newLike = isDislike ? "dislike" : "like";
+      const newLike = isDislike ? 'dislike' : 'like';
       if (isActive) {
         setLike(track.id, currOptimLike === newLike ? null : newLike);
       } else {
-        setOptimisticLike(currOptimLike === newLike ? null : newLike)
+        setOptimisticLike(currOptimLike === newLike ? null : newLike);
       }
       await likeTrack(track, isDislike);
     });
@@ -46,12 +48,12 @@ const Track: FC<ITrack> = ({ track, onPlay }) => {
       <span>{track.title}</span>
       <div className="ml-auto flex items-center gap-3">
         <LikeButton
-          isActive={currOptimLike === "dislike"}
+          isActive={currOptimLike === 'dislike'}
           isDislike
           onClick={() => handleLike(true)}
         />
         <LikeButton
-          isActive={currOptimLike === "like"}
+          isActive={currOptimLike === 'like'}
           onClick={() => handleLike(false)}
         />
       </div>

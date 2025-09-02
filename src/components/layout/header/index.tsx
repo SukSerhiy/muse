@@ -1,11 +1,13 @@
 'use client';
 
-import { Separator } from '@/components/ui/separator';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { Separator } from '@/components/ui/separator';
 import { APP_NAME } from '@/lib/constants';
+
 import ModeToggle from './ModeToggle';
-import { useSession } from 'next-auth/react';
 
 const Header = () => {
   const { data: session, status } = useSession();

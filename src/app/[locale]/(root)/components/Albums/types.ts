@@ -1,5 +1,5 @@
 import { IChartAlbum } from '@/lib/external/types/charts';
 
-export interface IAlbumsList {
+export type IAlbumsList = {
   albums: IChartAlbum[];
 }

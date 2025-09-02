@@ -1,7 +1,9 @@
-import { FC } from "react";
-import { PlayIcon, PauseIcon, ChevronFirst, ChevronLast } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { IconButtonsProps } from "./types";
+import { ChevronFirst, ChevronLast, PauseIcon, PlayIcon } from 'lucide-react';
+import { FC } from 'react';
+
+import { Button } from '@/components/ui/button';
+
+import { IconButtonsProps } from './types';
 
 const IconButtons: FC<IconButtonsProps> = ({
   isPlaying,

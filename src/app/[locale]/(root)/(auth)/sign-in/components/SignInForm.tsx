@@ -1,6 +1,14 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+
+import { Button } from '@/components/ui//button';
+import { Input } from '@/components/ui//input';
 import {
   Form,
   FormControl,
@@ -9,13 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@/components/ui//input';
-import { Button } from '@/components/ui//button';
-import Link from 'next/link';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
 const FormSchema = z.object({
   email: z.string().min(1, 'Email is required').email('Invalid email'),

@@ -1,9 +1,11 @@
-"use client";
-import { FC, useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ThumbsUp, ThumbsDown } from "lucide-react";
-import { useTheme } from "next-themes";
-import { LikeButtonProps } from "./types";
+'use client';
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { FC, useEffect, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+
+import { LikeButtonProps } from './types';
 
 const LikeButton: FC<LikeButtonProps> = ({ isActive, isDislike, onClick }) => {
   const { theme } = useTheme();
@@ -14,9 +16,9 @@ const LikeButton: FC<LikeButtonProps> = ({ isActive, isDislike, onClick }) => {
     setMounted(true);
   }, []);
 
-  const colorFill = theme === "light" ? "#708090" : "white";
+  const colorFill = theme === 'light' ? '#708090' : 'white';
 
-  const fill = isActive ? colorFill : "none";
+  const fill = isActive ? colorFill : 'none';
 
   return (
     <Button

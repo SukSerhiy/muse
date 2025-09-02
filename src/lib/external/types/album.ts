@@ -1,4 +1,4 @@
-export interface IAlbum {
+export type IAlbum = {
   id: number;
   title?: string | null;
   link?: string | null;
@@ -15,7 +15,7 @@ export interface IAlbum {
   tracks: null;
 }
 
-export interface IAlbumTrack {
+export type IAlbumTrack = {
   id: number;
   title?: string | null;
   preview?: string | null;

@@ -1,6 +1,7 @@
-import { FC } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+import { FC } from 'react';
+
 import {
   Card,
   CardContent,
@@ -8,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+
 import { IAlbumsList } from './types';
 
 const Albums: FC<IAlbumsList> = async ({ albums }) => {

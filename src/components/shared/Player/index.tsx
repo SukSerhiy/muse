@@ -1,19 +1,21 @@
-"use client";
-import { useState, useEffect, useRef, useCallback, useTransition } from "react";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
 import {
   Volume,
   Volume1,
   Volume2,
   VolumeX,
-} from "lucide-react";
-import { usePlayer } from "@/components/context/PlayerProvider";
-import { Slider } from "@/components/ui/slider";
-import { likeTrack } from "@/lib/actions/track.actions";
-import { formatTime } from "@/lib/utils/time";
-import LikeButton from "@/components/shared/LikeButton";
-import PlayButtons from "./PlayButtons";
+} from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
+
+import { usePlayer } from '@/components/context/PlayerProvider';
+import LikeButton from '@/components/shared/LikeButton';
+import { Slider } from '@/components/ui/slider';
+import { likeTrack } from '@/lib/actions/track.actions';
+import { formatTime } from '@/lib/utils/time';
+
+import PlayButtons from './PlayButtons';
 
 const Player = () => {
   const {
@@ -98,7 +100,7 @@ const Player = () => {
   const handleLike = (isDislike?: boolean) => {
     startTransition(async () => {
       if (!currentTrack) return;
-      const newLike = isDislike ? "dislike" : "like";
+      const newLike = isDislike ? 'dislike' : 'like';
       setLike(currentTrack.id, currentTrack.like === newLike ? null : newLike);
       await likeTrack(currentTrack, isDislike);
     });
@@ -107,7 +109,7 @@ const Player = () => {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.pause();
-      audioRef.current.src = audioSrc || "";
+      audioRef.current.src = audioSrc || '';
       audioRef.current.load();
       audioRef.current.currentTime = 0;
       setCurrentTime(0);
@@ -218,12 +220,12 @@ const Player = () => {
                 </div>
               </div>
               <LikeButton
-                isActive={currentTrack?.like === "dislike"}
+                isActive={currentTrack?.like === 'dislike'}
                 isDislike
                 onClick={() => handleLike(true)}
               />
               <LikeButton
-                isActive={currentTrack?.like === "like"}
+                isActive={currentTrack?.like === 'like'}
                 onClick={() => handleLike(false)}
               />
             </div>

@@ -1,6 +1,6 @@
-import { Track } from "@/lib/types/track";
+import { Track } from '@/lib/types/track';
 
-export interface ITrack {
+export type ITrack = {
   track: Track;
   onPlay: (track: Track) => void;
 }

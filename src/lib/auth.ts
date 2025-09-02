@@ -1,7 +1,8 @@
-import { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcrypt';
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+
 import { db } from './db';
 
 export const authOptions: NextAuthOptions = {
@@ -67,7 +68,7 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           username: token.username,
         }
-      }
+      };
       return session;
     },
   },
