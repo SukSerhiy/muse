@@ -11,7 +11,7 @@ const compat = new FlatCompat({ baseDirectory: __dirname });
 
 const eslintConfig = [
   {
-    ignores: ['node_modules', '.next', 'dist'], // какие папки игнорить
+    ignores: ['node_modules', '.next', 'dist', 'prisma', 'src/lib/generated'], // какие папки игнорить
   },
 
   // next + typescript
