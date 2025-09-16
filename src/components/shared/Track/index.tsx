@@ -2,10 +2,10 @@
 import { PauseIcon, PlayIcon } from 'lucide-react';
 import { FC, useOptimistic, useTransition } from 'react';
 
+import { likeTrack } from '@/app/actions/track.actions';
 import { usePlayer } from '@/components/context/PlayerProvider';
 import LikeButton from '@/components/shared/LikeButton';
 import { Button } from '@/components/ui/button';
-import { likeTrack } from '@/lib/actions/track.actions';
 
 import { ITrack } from './types';
 
@@ -13,7 +13,7 @@ const Track: FC<ITrack> = ({ track, onPlay }) => {
   const { isPlaying, currentTrackOpts, optimisticTracks, setLike } =
     usePlayer();
 
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const isActive = currentTrackOpts?.id === track.id;
 

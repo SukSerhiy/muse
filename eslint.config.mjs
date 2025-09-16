@@ -31,7 +31,7 @@ const eslintConfig = [
       'prefer-arrow-callback': ['error'],
       'prefer-template': ['error'],
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
-      'no-console': ['warn'],
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
       'perfectionist/sort-imports': ['error', { tsconfigRootDir: '.' }],
       'perfectionist/sort-named-imports': ['error'],
     },

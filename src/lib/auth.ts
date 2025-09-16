@@ -1,75 +1,107 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcrypt';
-import { NextAuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GitHubProvider from 'next-auth/providers/github';
+import GoogleProvider from 'next-auth/providers/google';
 
 import { db } from './db';
+import { Provider } from './generated/prisma';
 
-export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
-  secret: process.env.NEXTAUTH_SECRET,
+export const {
+  handlers: { GET, POST },
+  auth,
+  signIn,
+  signOut,
+} = NextAuth({
   session: {
     strategy: 'jwt',
   },
-  pages: {
-    signIn: '/sign-in',
-  },
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        email: { label: 'Email', type: 'email', placeholder: 'john@mail.com' },
-        password: { label: 'Password', type: 'password' },
-      },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
-          return null;
+        try {
+          if (credentials == null) return null;
+
+          const user = await db.user.findUnique({
+            where: {
+              email: String(credentials?.email),
+            },
+          });
+
+          if (!user) {
+            throw new Error('User not found');
+          }
+
+          const isMatch = await compare(
+            String(credentials.password),
+            String(user.password)
+          );
+
+          if (!isMatch) {
+            throw new Error('Check your password');
+          }
+
+          return {
+            id: String(user.id),
+            name: user.username,
+            email: user.email,
+            image: null,
+          };
+        } catch (error: unknown) {
+          throw error;
         }
+      },
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 
-        const existingUser = await db.user.findUnique({
-          where: { email: credentials?.email },
-        });
+      authorization: {
+        params: {
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
+      },
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
 
-        if (!existingUser) {
-          return null;
-        }
-
-        const passwordMatch = await compare(
-          credentials.password,
-          existingUser.password
-        );
-
-        if (!passwordMatch) {
-          return null;
-        }
-
-        return {
-          id: String(existingUser.id),
-          username: existingUser.username,
-          email: existingUser.email,
-        };
+      authorization: {
+        params: {
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
       },
     }),
   ],
+  // debug: true,
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        return {
-          ...token,
-          username: user.username,
-        };
+    async signIn({ user, account }) {
+      const { provider } = account || {};
+      if (provider !== 'credentials') {
+        await db.user.create({
+          data: {
+            id: user.id,
+            username: user.name,
+            email: user.email,
+            image: user.image,
+            provider: provider as Provider,
+          },
+        });
       }
+      return true;
+    },
+    async jwt({ token, user }) {
+      if (user && user.id) token.id = String(user.id);
       return token;
     },
-    async session({ session, user, token }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          username: token.username,
-        }
-      };
+    async session({ session, token }) {
+      if (session.user && typeof token.id === 'string')
+        session.user.id = token.id;
       return session;
     },
   },
-};
+});

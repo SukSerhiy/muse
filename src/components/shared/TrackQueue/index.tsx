@@ -1,9 +1,9 @@
 'use client';
-import { FC, useEffect, useRef, useState, useTransition } from 'react';
+import { FC, useEffect, useRef, useTransition } from 'react';
 
+import { refresh } from '@/app/actions/track.actions';
 import { usePlayer } from '@/components/context/PlayerProvider';
 import { Button } from '@/components/ui/button';
-import { refresh } from '@/lib/actions/track.actions';
 import { Track as TrackType } from '@/lib/types/track';
 
 import Track from '../Track';
@@ -11,7 +11,6 @@ import { ITrackQueue } from './types';
 
 const TrackQueue: FC<ITrackQueue> = ({ tracks: serverTracks }) => {
   const {
-    tracks,
     optimisticTracks,
     setTracks,
     setIsPlaying,
@@ -32,7 +31,8 @@ const TrackQueue: FC<ITrackQueue> = ({ tracks: serverTracks }) => {
   };
 
   useEffect(() => {
-    if (!currentTrackOpts || !serverTracksIds.includes(currentTrackOpts.id)) return;
+    if (!currentTrackOpts || !serverTracksIds.includes(currentTrackOpts.id))
+      return;
     if (contextTracksIds.length === 0 || !trackIdsAreEqual()) {
       setTracks(serverTracks);
       initializedRef.current = true;

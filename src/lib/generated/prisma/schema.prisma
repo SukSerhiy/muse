@@ -14,11 +14,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Provider {
+  CREDENTIALS
+  GOOGLE
+  GITHUB
+}
+
 model User {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(uuid())
   email     String?   @unique
   username  String?   @unique
   password  String?
+  image     String?
+  provider  Provider
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
   Like      Like[]
@@ -41,7 +49,7 @@ model Track {
 
 model Like {
   id        Int       @id @default(autoincrement())
-  userId    Int
+  userId    String
   trackId   BigInt
   user      User      @relation(fields: [userId], references: [id])
   track     Track     @relation(fields: [trackId], references: [id])

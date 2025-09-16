@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 /* Hide Next.js Fast Refresh / Debug Overlay  */
 #__next-build-watcher,
@@ -163,5 +163,8 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  button {
+    cursor: pointer;
   }
 }

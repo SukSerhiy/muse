@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
 
 import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 
 import '@/assets/styles/globals.css';
-import { getLocale, getMessages } from 'next-intl/server';
 import { ThemeProvider } from 'next-themes';
 import { Inter } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
 
 import { PlayerProvider } from '@/components/context/PlayerProvider';
-import SessionProvider from '@/components/context/SessionProvider';
+// import SessionProvider from '@/components/context/SessionProvider';
 import Player from '@/components/shared/Player';
 import { APP_NAME, SERVER_URL } from '@/lib/constants';
 
@@ -41,12 +42,13 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <SessionProvider>
-              <PlayerProvider>
-                {children}
-                <Player />
-              </PlayerProvider>
-            </SessionProvider>
+            {/* <SessionProvider> */}
+            <PlayerProvider>
+              {children}
+              <Player />
+            </PlayerProvider>
+            <ToastContainer />
+            {/* </SessionProvider> */}
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

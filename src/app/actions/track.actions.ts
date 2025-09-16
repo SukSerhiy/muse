@@ -1,9 +1,9 @@
 // TODO: Убрать хардкод с userId
 'use server';
 
-// import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 
+import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { Track } from '@/lib/types/track';
 
@@ -13,8 +13,13 @@ export async function refresh() {
 }
 
 export async function likeTrack(track: Track, isDislike?: boolean) {
-  // const session = await getServerSession();
-  // console.log('session', session);
+  const session = await auth();
+  const { id: userId } = session?.user || {};
+
+  if (!userId) {
+    throw new Error('User not found');
+  }
+
   let existingTrack = await db.track.findUnique({
     where: {
       id: track.id,
@@ -30,21 +35,21 @@ export async function likeTrack(track: Track, isDislike?: boolean) {
 
   const existingLike = await db.like.findUnique({
     where: {
-      userId_trackId: { userId: 1, trackId: track.id },
+      userId_trackId: { userId, trackId: track.id },
     },
   });
 
   if (!existingLike) {
     await db.like.create({
-      data: { trackId: track.id, userId: 1, isDislike },
+      data: { trackId: track.id, userId, isDislike },
     });
   } else if (existingLike.isDislike === isDislike) {
     await db.like.delete({
-      where: { userId_trackId: { userId: 1, trackId: track.id } },
+      where: { userId_trackId: { userId, trackId: track.id } },
     });
   } else {
     await db.like.update({
-      where: { userId_trackId: { userId: 1, trackId: track.id } },
+      where: { userId_trackId: { userId, trackId: track.id } },
       data: { isDislike },
     });
   }

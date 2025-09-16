@@ -1,18 +1,13 @@
 'use client';
-import {
-  Volume,
-  Volume1,
-  Volume2,
-  VolumeX,
-} from 'lucide-react';
+import { Volume, Volume1, Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
 
+import { likeTrack } from '@/app/actions/track.actions';
 import { usePlayer } from '@/components/context/PlayerProvider';
 import LikeButton from '@/components/shared/LikeButton';
 import { Slider } from '@/components/ui/slider';
-import { likeTrack } from '@/lib/actions/track.actions';
 import { formatTime } from '@/lib/utils/time';
 
 import PlayButtons from './PlayButtons';
@@ -33,24 +28,20 @@ const Player = () => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
 
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const savedVolumeRef = useRef<number>(1);
 
   const currentTrack = optimisticTracks.find(
-    (item) => item.id === currentTrackOpts?.id,
+    (item) => item.id === currentTrackOpts?.id
   );
 
   const { preview: audioSrc } = currentTrackOpts || {};
 
   const currentTrackIdx = optimisticTracks.findIndex(
-    (item) => item.id === currentTrackOpts?.id,
-  );
-
-  const currOptimTrack = optimisticTracks?.find(
-    (item) => item.id === currentTrackOpts?.id,
+    (item) => item.id === currentTrackOpts?.id
   );
 
   const handlePlayPause = () => {
@@ -61,7 +52,7 @@ const Player = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
       setProgress(
-        (audioRef.current.currentTime / audioRef.current.duration) * 100,
+        (audioRef.current.currentTime / audioRef.current.duration) * 100
       );
     }
   };
