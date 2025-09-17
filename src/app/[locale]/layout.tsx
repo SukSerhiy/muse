@@ -6,11 +6,11 @@ import { getLocale, getMessages } from 'next-intl/server';
 import '@/assets/styles/globals.css';
 import { ThemeProvider } from 'next-themes';
 import { Inter } from 'next/font/google';
-import { ToastContainer } from 'react-toastify';
 
 import { PlayerProvider } from '@/components/context/PlayerProvider';
 // import SessionProvider from '@/components/context/SessionProvider';
 import Player from '@/components/shared/Player';
+import { Toaster } from '@/components/ui/sonner';
 import { APP_NAME, SERVER_URL } from '@/lib/constants';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -47,7 +47,7 @@ export default async function RootLayout({
               {children}
               <Player />
             </PlayerProvider>
-            <ToastContainer />
+            <Toaster position="top-center" />
             {/* </SessionProvider> */}
           </NextIntlClientProvider>
         </ThemeProvider>

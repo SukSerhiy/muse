@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useActionState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { signUp } from '@/app/actions/auth.actions';
@@ -32,9 +32,15 @@ const formSchema = signUpSchema
 const SignUpForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
   });
 
-  const { handleSubmit, setError } = form;
+  const { handleSubmit, setError, reset } = form;
 
   const [state, action, isLoadingState] = useActionState(signUp, {
     success: false,
@@ -50,8 +56,12 @@ const SignUpForm = () => {
           });
         });
       }
+      if (state.success) {
+        reset();
+        toast('Sign Up Successfully Completed!');
+      }
     }
-  }, [state, isLoadingState, setError]);
+  }, [state, isLoadingState, setError, reset]);
 
   const onSubmit = handleSubmit(async (values) => {
     // if (!isValid) return;
@@ -62,8 +72,6 @@ const SignUpForm = () => {
     formData.append('password', password);
     action(formData);
   });
-
-  const notify = () => toast('Wow so easy !');
 
   return (
     <Form {...form}>
@@ -146,7 +154,12 @@ const SignUpForm = () => {
           Sign in
         </Link>
       </p>
-      <Button type="button" onClick={notify}>
+      <Button
+        type="button"
+        onClick={() => {
+          toast('Event has been created');
+        }}
+      >
         Click toast
       </Button>
     </Form>
