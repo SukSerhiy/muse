@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react';
 
-import { Like, Track } from '@/lib/types/track';
+import { Like, Track } from '@/lib/types';
 
 type CurrentTrackOpts = {
   id: bigint;

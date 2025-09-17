@@ -1,31 +1,30 @@
 import { getTranslations } from 'next-intl/server';
 
 import TrackQueue from '@/components/shared/TrackQueue';
+import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { getCharts } from '@/lib/external/services';
-import { Like } from '@/lib/types/track';
+import { mapTracksWithLikes } from '@/lib/features/tracks/utils/mappers';
 
 import Albums from './components/Albums';
 
 export default async function Page() {
-  const chartsData = await getCharts();
-  const { data: albums } = chartsData.albums;
+  const charts = await getCharts();
+  const session = await auth();
+  const { id: userId } = session?.user || {};
 
-  const { data: tracks } = chartsData.tracks;
+  const {
+    albums: { data: albums },
+  } = charts;
 
-  const likes = await db.like.findMany();
+  let {
+    tracks: { data: tracks },
+  } = charts;
 
-  const tracksWithLikes = tracks.map((item) => {
-    const trackLike = likes.find((l) => l.trackId === item.id);
-    let currentLike: Like | null = null;
-    if (trackLike) {
-      currentLike = trackLike.isDislike ? 'dislike' : 'like';
-    }
-    return {
-      ...item,
-      like: currentLike,
-    };
-  });
+  if (userId) {
+    const likes = await db.like.findMany();
+    tracks = mapTracksWithLikes(tracks, likes);
+  }
 
   const t = await getTranslations();
 
@@ -36,7 +35,7 @@ export default async function Page() {
         <Albums albums={albums} />
       </div>
       <div className="mx-auto my-3 max-w-4xl">
-        <TrackQueue tracks={tracksWithLikes} />
+        <TrackQueue tracks={tracks} />
       </div>
     </div>
   );

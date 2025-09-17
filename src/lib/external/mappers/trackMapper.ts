@@ -1,4 +1,4 @@
-import { Track as InternalTrack } from '@/lib/types/track';
+import { Track as InternalTrack } from '@/lib/types';
 
 import { ITrack as ExternalTrack } from '../types';
 
@@ -13,5 +13,6 @@ export const mapTrack: (t: ExternalTrack) => InternalTrack = (t) => {
     artistName: t.artist.name,
     albumSourceId: t.album.id,
     albumTitle: t.album.title,
+    like: null,
   };
 };

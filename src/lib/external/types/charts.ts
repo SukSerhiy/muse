@@ -11,9 +11,9 @@ export type ICharts = {
   };
   artists: {
     data: IChartArtist[];
-    total: number
-  }
-}
+    total: number;
+  };
+};
 
 export type IChartAlbum = {
   id: number;
@@ -29,7 +29,7 @@ export type IChartAlbum = {
     id: number;
     name?: string | null;
   };
-}
+};
 
 export type IChartArtist = {
   id: number;
@@ -40,4 +40,4 @@ export type IChartArtist = {
   picture_medium?: string | null;
   picture_big?: string | null;
   picture_xl?: string | null;
-}
+};

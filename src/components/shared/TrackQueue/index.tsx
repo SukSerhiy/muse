@@ -4,7 +4,7 @@ import { FC, useEffect, useRef, useTransition } from 'react';
 import { refresh } from '@/app/actions/track.actions';
 import { usePlayer } from '@/components/context/PlayerProvider';
 import { Button } from '@/components/ui/button';
-import { Track as TrackType } from '@/lib/types/track';
+import { Track as TrackType } from '@/lib/types';
 
 import Track from '../Track';
 import { ITrackQueue } from './types';

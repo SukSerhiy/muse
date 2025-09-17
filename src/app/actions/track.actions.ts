@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { Track } from '@/lib/types/track';
+import { Track } from '@/lib/types';
 
 // Temporary, needs to be removed
 export async function refresh() {

@@ -1,3 +1,5 @@
+import { ITrack } from './';
+
 export type IAlbum = {
   id: number;
   title?: string | null;
@@ -8,16 +10,12 @@ export type IAlbum = {
   cover_big?: string | null;
   cover_xl?: string | null;
   genre_id?: number;
+  release_date?: string;
   artist: {
     id: number;
     name?: string;
   };
-  tracks: null;
-}
-
-export type IAlbumTrack = {
-  id: number;
-  title?: string | null;
-  preview?: string | null;
-  duration?: number | null;
-}
+  tracks: {
+    data: ITrack[];
+  };
+};
