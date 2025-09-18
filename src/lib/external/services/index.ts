@@ -40,6 +40,25 @@ export const getAlbum = (id: number) =>
     };
   });
 
-export const getArtist = (id: number) => api.getArtist(id);
+export const getArtist = (id: number) =>
+  api.getArtist(id).then((res) => {
+    if (isError(res)) {
+      throw new Error(res.error.message);
+    }
+    return res;
+  });
+
+export const getArtistTracks = (id: number) =>
+  api.getArtistTracks(id).then((res) => {
+    if (isError(res)) {
+      throw new Error(res.error.message);
+    }
+    const { data: tracks } = res;
+    const mappedTracks = tracks.map((item) => mapTrack(item));
+    return {
+      ...res,
+      data: mappedTracks,
+    };
+  });
 
 export const searchTracks = (q: string) => api.searchTracks(q);

@@ -4,3 +4,14 @@ export const endpoints = {
   ARTIST: 'artist',
   SEARCH: 'search',
 };
+
+export const artistEndpoints = {
+  TOP: 'top',
+  ALBUMS: 'albums',
+  RELATED: 'related',
+};
+
+export const paginationParams = {
+  LIMIT: 'limit',
+  INDEX: 'index',
+};

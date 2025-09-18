@@ -10,7 +10,7 @@ const Artists: FC<IArtistsList> = async ({ artists }) => {
   return (
     <>
       {artists?.map((item) => (
-        <Link href={`/album/${item.id}`} key={item.id}>
+        <Link href={`/artist/${item.id}`} key={item.id}>
           <Card className="w-full">
             <CardHeader>
               <div>
@@ -22,7 +22,7 @@ const Artists: FC<IArtistsList> = async ({ artists }) => {
                 src={item.picture_medium || ''}
                 width={250}
                 height={250}
-                alt="album"
+                alt="artist"
               />
             </CardContent>
           </Card>

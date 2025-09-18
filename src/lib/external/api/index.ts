@@ -1,8 +1,9 @@
 import { DEEZER_API_HOST } from '@/lib/constants';
 
-import { IAlbum, IArtist, ICharts, ISearchResults } from '../types';
-import { endpoints } from './endpoints';
-import { Response } from './types';
+import { IAlbum, IArtist, ICharts, ISearchResults, ITrack } from '../types';
+import { DEFAULT_LIMIT } from './constants';
+import { artistEndpoints, endpoints, paginationParams } from './endpoints';
+import { Paginated, PaginationParams, Response } from './types';
 import { getData } from './utils';
 
 export const getCharts = () =>
@@ -13,6 +14,13 @@ export const getAlbum = (id: number) =>
 
 export const getArtist = (id: number) =>
   getData<Response<IArtist>>(`${DEEZER_API_HOST}/${endpoints.ARTIST}/${id}`);
+
+export const getArtistTracks = (id: number, pagination?: PaginationParams) => {
+  const { limit = DEFAULT_LIMIT, index = 0 } = pagination || {};
+  return getData<Response<Paginated<ITrack[]>>>(
+    `${DEEZER_API_HOST}/${endpoints.ARTIST}/${id}/${artistEndpoints.TOP}?${paginationParams.LIMIT}=${limit}&${paginationParams.INDEX}=${index}`
+  );
+};
 
 export const searchTracks = (q: string) =>
   getData<Response<ISearchResults>>(
