@@ -1,8 +1,13 @@
+import { isError } from '@/lib/external/api/types';
+
 import * as api from '../api/index';
 import { mapTrack } from '../mappers/trackMapper';
 
 export const getCharts = () =>
   api.getCharts().then((res) => {
+    if (isError(res)) {
+      throw new Error(res.error.message);
+    }
     const {
       tracks: { data: tracksData },
     } = res;
@@ -18,6 +23,9 @@ export const getCharts = () =>
 
 export const getAlbum = (id: number) =>
   api.getAlbum(id).then((res) => {
+    if (isError(res)) {
+      throw new Error(res.error.message);
+    }
     const {
       tracks: { data: tracksData },
     } = res;
