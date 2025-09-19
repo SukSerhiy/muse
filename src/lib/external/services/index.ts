@@ -61,4 +61,12 @@ export const getArtistTracks = (id: number) =>
     };
   });
 
+export const getArtistAlbums = (id: number) =>
+  api.getArtistAlbums(id).then((res) => {
+    if (isError(res)) {
+      throw new Error(res.error.message);
+    }
+    return res;
+  });
+
 export const searchTracks = (q: string) => api.searchTracks(q);

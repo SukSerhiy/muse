@@ -1,10 +1,16 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import Albums from '@/app/[locale]/(root)/components/Albums';
 import TrackQueue from '@/components/shared/TrackQueue';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { getArtist, getArtistTracks } from '@/lib/external/services';
+import {
+  getArtist,
+  getArtistAlbums,
+  getArtistTracks,
+} from '@/lib/external/services';
 import { mapTracksWithLikes } from '@/lib/features/tracks/utils/mappers';
 
 const avatarPlug = '/images/person.jpg';
@@ -30,10 +36,14 @@ export default async function ArtistPage({ params }: PageProps) {
     tracks = mapTracksWithLikes(tracks, likes);
   }
 
+  const { data: albums } = await getArtistAlbums(Number(id));
+
   const { name, picture_big: pictureBig } = artist;
 
+  console.log('albums', albums);
+
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="">
       <h1 className="text-2xl font-semibold">{name}</h1>
       <Image
         src={pictureBig || avatarPlug}
@@ -43,6 +53,13 @@ export default async function ArtistPage({ params }: PageProps) {
         className="rounded-xs shadow-lg"
       />
       <TrackQueue tracks={tracks} />
+      <div className="flex justify-between">
+        <h3>Albums</h3>
+        <Link href="#">Show all</Link>
+      </div>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+        <Albums albums={albums} />
+      </div>
     </div>
   );
 }

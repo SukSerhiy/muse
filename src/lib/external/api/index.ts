@@ -22,6 +22,13 @@ export const getArtistTracks = (id: number, pagination?: PaginationParams) => {
   );
 };
 
+export const getArtistAlbums = (id: number, pagination?: PaginationParams) => {
+  const { limit = DEFAULT_LIMIT, index = 0 } = pagination || {};
+  return getData<Response<Paginated<IAlbum[]>>>(
+    `${DEEZER_API_HOST}/${endpoints.ARTIST}/${id}/${artistEndpoints.ALBUMS}?${paginationParams.LIMIT}=${limit}&${paginationParams.INDEX}=${index}`
+  );
+};
+
 export const searchTracks = (q: string) =>
   getData<Response<ISearchResults>>(
     `${DEEZER_API_HOST}/${endpoints.SEARCH}?q=${q}`
