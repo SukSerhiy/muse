@@ -40,8 +40,6 @@ export default async function ArtistPage({ params }: PageProps) {
 
   const { name, picture_big: pictureBig } = artist;
 
-  console.log('albums', albums);
-
   return (
     <div className="">
       <h1 className="text-2xl font-semibold">{name}</h1>

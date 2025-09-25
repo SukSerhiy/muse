@@ -42,7 +42,7 @@ export default async function AlbumPage({ params }: PageProps) {
     }
 
     return (
-      <div>
+      <>
         <div className="flex gap-3">
           <Image
             src={coverBig || coverPlug}
@@ -58,7 +58,7 @@ export default async function AlbumPage({ params }: PageProps) {
           </div>
         </div>
         <TrackQueue tracks={tracks} />
-      </div>
+      </>
     );
   } catch (err: unknown) {
     const { message } = err as ApiError;

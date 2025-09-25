@@ -1,6 +1,7 @@
+import DynamicMargin from '@/components/layout/DynamicMargin';
 import Header from '@/components/layout/header';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -8,7 +9,8 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      <main className="mt-3 px-1 md:px-3">
+      <main>
+        <DynamicMargin />
         {children}
       </main>
     </>

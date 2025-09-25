@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
+import ObserverWrapper from '@/components/services/ObserverWrapper';
 import TrackQueue from '@/components/shared/TrackQueue';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
@@ -8,8 +9,11 @@ import { mapTracksWithLikes } from '@/lib/features/tracks/utils/mappers';
 
 import Albums from './components/Albums';
 import Artists from './components/Artists';
+import HeroObserver from './components/HeroObserver';
+import HeroSection from './components/HeroSection';
 
 export default async function Page() {
+  const t = await getTranslations();
   const charts = await getCharts();
   const session = await auth();
   const { id: userId } = session?.user || {};
@@ -28,20 +32,32 @@ export default async function Page() {
     tracks = mapTracksWithLikes(tracks, likes);
   }
 
-  const t = await getTranslations();
-
   return (
-    <div>
-      <h1 className="text-3xl font-bold">{t('ChartsPage.title')}</h1>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-        <Albums albums={albums} />
-      </div>
-      <div className="mx-auto my-3 max-w-4xl">
-        <TrackQueue tracks={tracks} />
-      </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-        <Artists artists={artists} />
-      </div>
-    </div>
+    <>
+      <HeroObserver>
+        <HeroSection />
+      </HeroObserver>
+      <ObserverWrapper animate>
+        <section id="albums">
+          <h1 className="text-3xl font-bold">{t('ChartsPage.title')}</h1>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+            <Albums albums={albums} />
+          </div>
+        </section>
+      </ObserverWrapper>
+      <ObserverWrapper animate>
+        <section id="tracks" className="mx-auto my-3 max-w-4xl">
+          <TrackQueue tracks={tracks} />
+        </section>
+      </ObserverWrapper>
+      <ObserverWrapper animate>
+        <section
+          id="artists"
+          className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4"
+        >
+          <Artists artists={artists} />
+        </section>
+      </ObserverWrapper>
+    </>
   );
 }
