@@ -14,6 +14,4 @@ export type Paginated<T> = {
   next?: string;
 };
 
-export function isError<T>(res: Response<T>): res is { error: ApiError } {
-  return typeof res === 'object' && res !== null && 'error' in res;
-}
+export type FetchOptions = RequestInit & { next?: { revalidate?: number } };

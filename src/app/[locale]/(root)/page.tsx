@@ -7,10 +7,10 @@ import { db } from '@/lib/db';
 import { getCharts } from '@/lib/external/services';
 import { mapTracksWithLikes } from '@/lib/features/tracks/utils/mappers';
 
-import Albums from './components/Albums';
 import Artists from './components/Artists';
 import HeroObserver from './components/HeroObserver';
 import HeroSection from './components/HeroSection';
+import SearchAlbums from './components/SearchAlbums';
 
 export default async function Page() {
   const t = await getTranslations();
@@ -40,9 +40,7 @@ export default async function Page() {
       <ObserverWrapper animate>
         <section id="albums">
           <h1 className="text-3xl font-bold">{t('ChartsPage.title')}</h1>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-            <Albums albums={albums} />
-          </div>
+          <SearchAlbums defaultData={albums} />
         </section>
       </ObserverWrapper>
       <ObserverWrapper animate>

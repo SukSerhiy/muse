@@ -1,6 +1,11 @@
-export async function getData<T>(url: string): Promise<T> {
+import { FetchOptions } from './types';
+
+export async function getData<T>(
+  url: string,
+  options?: FetchOptions
+): Promise<T> {
   try {
-    const response: Response = await fetch(url);
+    const response: Response = await fetch(url, options);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
@@ -8,11 +13,6 @@ export async function getData<T>(url: string): Promise<T> {
     const result = await response.json();
     return result;
   } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message);
-    } else {
-      console.error('Unknown error occurred');
-    }
     throw error;
   }
 }

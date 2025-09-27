@@ -1,35 +1,69 @@
 import { DEEZER_API_HOST } from '@/lib/constants';
 
-import { IAlbum, IArtist, ICharts, ISearchResults, ITrack } from '../types';
+import { IAlbum, ICharts, ITrack } from '../types';
 import { DEFAULT_LIMIT } from './constants';
-import { artistEndpoints, endpoints, paginationParams } from './endpoints';
-import { Paginated, PaginationParams, Response } from './types';
+import {
+  artistEndpoints,
+  endpoints,
+  paginationParams,
+  searchEndpoinst,
+} from './endpoints';
+import { FetchOptions, Paginated, PaginationParams, Response } from './types';
 import { getData } from './utils';
+
+const getPaginationQuery = (index: number, limit: number) =>
+  `${paginationParams.LIMIT}=${limit}&${paginationParams.INDEX}=${index}`;
+
+function makeSearch<T>(endpoint?: string) {
+  return (q: string, pagination?: PaginationParams, options?: FetchOptions) => {
+    const { limit = DEFAULT_LIMIT, index = 0 } = pagination || {};
+    const url = `${DEEZER_API_HOST}/${endpoints.SEARCH}${endpoint ? `/${endpoint}` : ''}?q=${q}&${getPaginationQuery(index, limit)}`;
+
+    return getData<Response<Paginated<T[]>>>(url, options);
+  };
+}
+
+function makeById<T>(endpoint: string) {
+  return (
+    id: number,
+    options?: RequestInit & { next?: { revalidate?: number } }
+  ) => {
+    const url = `${DEEZER_API_HOST}/${endpoint}/${id}`;
+    return getData<Response<T>>(url, options);
+  };
+}
+
+function makePaginatedById<T>(endpoint: string, subEndpoint: string) {
+  return (
+    id: number,
+    pagination?: PaginationParams,
+    options?: RequestInit & { next?: { revalidate?: number } }
+  ) => {
+    const { limit = DEFAULT_LIMIT, index = 0 } = pagination || {};
+
+    const url = `${DEEZER_API_HOST}/${endpoint}/${id}/${subEndpoint}?${getPaginationQuery(index, limit)}`;
+
+    return getData<Response<Paginated<T[]>>>(url, options);
+  };
+}
 
 export const getCharts = () =>
   getData<Response<ICharts>>(`${DEEZER_API_HOST}/${endpoints.CHART}`);
 
-export const getAlbum = (id: number) =>
-  getData<Response<IAlbum>>(`${DEEZER_API_HOST}/${endpoints.ALBUM}/${id}`);
+export const getAlbum = makeById<IAlbum>(endpoints.ALBUM);
 
-export const getArtist = (id: number) =>
-  getData<Response<IArtist>>(`${DEEZER_API_HOST}/${endpoints.ARTIST}/${id}`);
+export const getArtist = makeById<IAlbum>(endpoints.ARTIST);
 
-export const getArtistTracks = (id: number, pagination?: PaginationParams) => {
-  const { limit = DEFAULT_LIMIT, index = 0 } = pagination || {};
-  return getData<Response<Paginated<ITrack[]>>>(
-    `${DEEZER_API_HOST}/${endpoints.ARTIST}/${id}/${artistEndpoints.TOP}?${paginationParams.LIMIT}=${limit}&${paginationParams.INDEX}=${index}`
-  );
-};
+export const getArtistTracks = makePaginatedById<ITrack>(
+  endpoints.ARTIST,
+  artistEndpoints.TOP
+);
 
-export const getArtistAlbums = (id: number, pagination?: PaginationParams) => {
-  const { limit = DEFAULT_LIMIT, index = 0 } = pagination || {};
-  return getData<Response<Paginated<IAlbum[]>>>(
-    `${DEEZER_API_HOST}/${endpoints.ARTIST}/${id}/${artistEndpoints.ALBUMS}?${paginationParams.LIMIT}=${limit}&${paginationParams.INDEX}=${index}`
-  );
-};
+export const getArtistAlbums = makePaginatedById<IAlbum>(
+  endpoints.ARTIST,
+  artistEndpoints.ALBUMS
+);
 
-export const searchTracks = (q: string) =>
-  getData<Response<ISearchResults>>(
-    `${DEEZER_API_HOST}/${endpoints.SEARCH}?q=${q}`
-  );
+export const searchTracks = makeSearch<IAlbum>();
+
+export const searchAlbums = makeSearch<IAlbum>(searchEndpoinst.ALBUM);

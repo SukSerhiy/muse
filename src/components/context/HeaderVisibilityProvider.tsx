@@ -17,7 +17,8 @@ export function HeaderVisibilityProvider({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [hiddenByHero, setHiddenByHero] = useState(pathname === '/');
+  const isRoot = pathname === '/';
+  const [hiddenByHero, setHiddenByHero] = useState(isRoot);
   const [hiddenByScroll, setHiddenByScroll] = useState(false);
 
   const lastScrollTop = useRef(0);
@@ -41,6 +42,12 @@ export function HeaderVisibilityProvider({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isRoot && hiddenByHero) {
+      setHiddenByHero(false);
+    }
+  }, [hiddenByHero, isRoot]);
 
   return (
     <HeaderVisibilityContext.Provider

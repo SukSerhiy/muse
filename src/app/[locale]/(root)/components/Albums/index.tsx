@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -12,7 +13,9 @@ import {
 
 import { IAlbumsList } from './types';
 
-const Albums: FC<IAlbumsList> = async ({ albums }) => {
+const coverPlug = '/images/vinyl.png';
+
+const Albums: FC<IAlbumsList> = ({ albums }) => {
   return (
     <>
       {albums?.map((item) => (
@@ -26,10 +29,11 @@ const Albums: FC<IAlbumsList> = async ({ albums }) => {
             </CardHeader>
             <CardContent>
               <Image
-                src={item.cover_medium || ''}
+                src={item.cover_medium || coverPlug}
                 width={250}
                 height={250}
                 alt="album"
+                className={item.cover_medium ? '' : 'filter-(--filter-plug)'}
               />
             </CardContent>
           </Card>

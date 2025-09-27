@@ -5,6 +5,10 @@ export const endpoints = {
   SEARCH: 'search',
 };
 
+export const searchEndpoinst = {
+  ALBUM: 'album',
+};
+
 export const artistEndpoints = {
   TOP: 'top',
   ALBUMS: 'albums',

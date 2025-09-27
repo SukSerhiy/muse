@@ -1,72 +1,37 @@
-import { isError } from '@/lib/external/api/types';
-
 import * as api from '../api/index';
 import { mapTrack } from '../mappers/trackMapper';
+import { withErrorGuard, withErrorGuardAndMap } from './helpers';
 
 export const getCharts = () =>
-  api.getCharts().then((res) => {
-    if (isError(res)) {
-      throw new Error(res.error.message);
-    }
-    const {
-      tracks: { data: tracksData },
-    } = res;
-    const mappedTracks = tracksData.map((item) => mapTrack(item));
-    return {
-      ...res,
-      tracks: {
-        ...res.tracks,
-        data: mappedTracks,
-      },
-    };
-  });
+  withErrorGuardAndMap(api.getCharts(), (res) => ({
+    ...res,
+    tracks: {
+      ...res.tracks,
+      data: res.tracks.data.map(mapTrack),
+    },
+  }));
 
 export const getAlbum = (id: number) =>
-  api.getAlbum(id).then((res) => {
-    if (isError(res)) {
-      throw new Error(res.error.message);
-    }
-    const {
-      tracks: { data: tracksData },
-    } = res;
-    const mappedTracks = tracksData.map((item) => mapTrack(item));
+  withErrorGuardAndMap(api.getAlbum(id), (res) => ({
+    ...res,
+    tracks: {
+      ...res.tracks,
+      data: res.tracks.data.map(mapTrack),
+    },
+  }));
 
-    return {
-      ...res,
-      tracks: {
-        ...res.tracks,
-        data: mappedTracks,
-      },
-    };
-  });
-
-export const getArtist = (id: number) =>
-  api.getArtist(id).then((res) => {
-    if (isError(res)) {
-      throw new Error(res.error.message);
-    }
-    return res;
-  });
+export const getArtist = (id: number) => withErrorGuard(api.getArtist(id));
 
 export const getArtistTracks = (id: number) =>
-  api.getArtistTracks(id).then((res) => {
-    if (isError(res)) {
-      throw new Error(res.error.message);
-    }
-    const { data: tracks } = res;
-    const mappedTracks = tracks.map((item) => mapTrack(item));
-    return {
-      ...res,
-      data: mappedTracks,
-    };
-  });
+  withErrorGuardAndMap(api.getArtistTracks(id), (res) => ({
+    ...res,
+    data: res.data.map(mapTrack),
+  }));
 
 export const getArtistAlbums = (id: number) =>
-  api.getArtistAlbums(id).then((res) => {
-    if (isError(res)) {
-      throw new Error(res.error.message);
-    }
-    return res;
-  });
+  withErrorGuard(api.getArtistAlbums(id));
 
 export const searchTracks = (q: string) => api.searchTracks(q);
+
+export const searchAlbums = (q: string, index?: number, limit?: number) =>
+  withErrorGuard(api.searchAlbums(q, { index, limit }));

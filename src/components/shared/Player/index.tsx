@@ -148,7 +148,7 @@ const Player = () => {
 
   return (
     <div className="my-30">
-      <div className="bg-secondary fixed bottom-0 z-30 mt-6 -mr-1 flex h-20 w-full border-t-1 px-7 md:-mr-3">
+      <div className="bg-secondary fixed bottom-0 z-30 mt-6 -mr-1 flex h-20 w-full border-t-1 md:-mr-3">
         <div className="absolute w-full -translate-y-1/2 transform">
           <Slider
             value={[dragProgress !== null ? dragProgress : progress]}

@@ -49,7 +49,7 @@ export default async function AlbumPage({ params }: PageProps) {
             alt="album"
             width={500}
             height={500}
-            className="rounded-xs shadow-lg"
+            className={`rounded-xs shadow-lg ${coverBig ? '' : 'filter-(--filter-plug)'}`}
           />
           <div className="flex flex-col">
             <h1 className="text-2xl font-semibold">{title}</h1>

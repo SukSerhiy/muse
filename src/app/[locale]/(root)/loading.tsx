@@ -1,21 +1,7 @@
-import Image from 'next/image';
-
-import loader from '@/assets/loader.svg';
+import Loader from '@/components/shared/Loader';
 
 const LoadingPage = () => {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        width: '100vw',
-      }}
-    >
-      <Image src={loader} height={150} alt="Loading..." />
-    </div>
-  );
+  return <Loader fullSize />;
 };
 
 export default LoadingPage;
