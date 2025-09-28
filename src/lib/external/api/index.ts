@@ -24,10 +24,7 @@ function makeSearch<T>(endpoint?: string) {
 }
 
 function makeById<T>(endpoint: string) {
-  return (
-    id: number,
-    options?: RequestInit & { next?: { revalidate?: number } }
-  ) => {
+  return (id: number, options?: FetchOptions) => {
     const url = `${DEEZER_API_HOST}/${endpoint}/${id}`;
     return getData<Response<T>>(url, options);
   };
@@ -37,7 +34,7 @@ function makePaginatedById<T>(endpoint: string, subEndpoint: string) {
   return (
     id: number,
     pagination?: PaginationParams,
-    options?: RequestInit & { next?: { revalidate?: number } }
+    options?: FetchOptions
   ) => {
     const { limit = DEFAULT_LIMIT, index = 0 } = pagination || {};
 
@@ -47,8 +44,8 @@ function makePaginatedById<T>(endpoint: string, subEndpoint: string) {
   };
 }
 
-export const getCharts = () =>
-  getData<Response<ICharts>>(`${DEEZER_API_HOST}/${endpoints.CHART}`);
+export const getCharts = (options?: FetchOptions) =>
+  getData<Response<ICharts>>(`${DEEZER_API_HOST}/${endpoints.CHART}`, options);
 
 export const getAlbum = makeById<IAlbum>(endpoints.ALBUM);
 

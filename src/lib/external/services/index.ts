@@ -1,9 +1,11 @@
+import { FetchOptions, PaginationParams } from '@/lib/external/api/types';
+
 import * as api from '../api/index';
 import { mapTrack } from '../mappers/trackMapper';
 import { withErrorGuard, withErrorGuardAndMap } from './helpers';
 
-export const getCharts = () =>
-  withErrorGuardAndMap(api.getCharts(), (res) => ({
+export const getCharts = (options?: FetchOptions) =>
+  withErrorGuardAndMap(api.getCharts(options), (res) => ({
     ...res,
     tracks: {
       ...res.tracks,
@@ -11,8 +13,8 @@ export const getCharts = () =>
     },
   }));
 
-export const getAlbum = (id: number) =>
-  withErrorGuardAndMap(api.getAlbum(id), (res) => ({
+export const getAlbum = (id: number, options?: FetchOptions) =>
+  withErrorGuardAndMap(api.getAlbum(id, options), (res) => ({
     ...res,
     tracks: {
       ...res.tracks,
@@ -20,18 +22,33 @@ export const getAlbum = (id: number) =>
     },
   }));
 
-export const getArtist = (id: number) => withErrorGuard(api.getArtist(id));
+export const getArtist = (id: number, options?: FetchOptions) =>
+  withErrorGuard(api.getArtist(id, options));
 
-export const getArtistTracks = (id: number) =>
-  withErrorGuardAndMap(api.getArtistTracks(id), (res) => ({
+export const getArtistTracks = (
+  id: number,
+  pagination?: PaginationParams,
+  options?: FetchOptions
+) =>
+  withErrorGuardAndMap(api.getArtistTracks(id, pagination, options), (res) => ({
     ...res,
     data: res.data.map(mapTrack),
   }));
 
-export const getArtistAlbums = (id: number) =>
-  withErrorGuard(api.getArtistAlbums(id));
+export const getArtistAlbums = (
+  id: number,
+  pagination?: PaginationParams,
+  options?: FetchOptions
+) => withErrorGuard(api.getArtistAlbums(id, pagination, options));
 
-export const searchTracks = (q: string) => api.searchTracks(q);
+export const searchTracks = (
+  q: string,
+  pagination?: PaginationParams,
+  options?: FetchOptions
+) => api.searchTracks(q, pagination, options);
 
-export const searchAlbums = (q: string, index?: number, limit?: number) =>
-  withErrorGuard(api.searchAlbums(q, { index, limit }));
+export const searchAlbums = (
+  q: string,
+  pagination?: PaginationParams,
+  options?: FetchOptions
+) => withErrorGuard(api.searchAlbums(q, pagination, options));
