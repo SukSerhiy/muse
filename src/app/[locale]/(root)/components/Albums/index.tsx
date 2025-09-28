@@ -19,8 +19,8 @@ const Albums: FC<IAlbumsList> = ({ albums }) => {
   return (
     <>
       {albums?.map((item) => (
-        <Link href={`/album/${item.id}`} key={item.id}>
-          <Card className="w-full">
+        <Link href={`/album/${item.id}`} key={item.id} className="group">
+          <Card className="group-hover:bg-accent w-full transition-colors duration-300">
             <CardHeader>
               <div>
                 <CardTitle>{item.title}</CardTitle>
@@ -29,11 +29,11 @@ const Albums: FC<IAlbumsList> = ({ albums }) => {
             </CardHeader>
             <CardContent>
               <Image
-                src={item.cover_medium || coverPlug}
-                width={250}
-                height={250}
+                src={item.cover_big || coverPlug}
+                width={300}
+                height={300}
                 alt="album"
-                className={item.cover_medium ? '' : 'filter-(--filter-plug)'}
+                className={`mx-auto transition-transform duration-300 group-hover:scale-[1.03] ${item.cover_big ? '' : 'filter-(--filter-plug)'}`}
               />
             </CardContent>
           </Card>

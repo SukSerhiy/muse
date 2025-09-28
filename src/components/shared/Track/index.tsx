@@ -37,7 +37,9 @@ const Track: FC<ITrack> = ({ track, onPlay }) => {
   };
 
   return (
-    <div className="flex items-center gap-3 rounded-xs border-2 p-1.5">
+    <div
+      className={`flex items-center gap-3 rounded-xs border-2 p-1.5 transition-colors duration-300 ${isActive ? 'bg-accent' : ''}`}
+    >
       <Button
         className="rounded-full"
         variant="ghost"

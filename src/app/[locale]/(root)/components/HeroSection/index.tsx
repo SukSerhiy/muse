@@ -42,10 +42,10 @@ const HeroSection = async () => {
       </div>
       <div className="text-hero-foreground flex flex-1 flex-col items-center justify-center">
         <h1 className="mb-24 text-center text-6xl font-bold">
-          {t('Hero.title')}
+          {t('MainPage.Hero.title')}
         </h1>
         <p className="w-full text-justify text-xl md:w-2/3 lg:w-1/3">
-          {t('Hero.description')}
+          {t('MainPage.Hero.description')}
         </p>
       </div>
     </section>

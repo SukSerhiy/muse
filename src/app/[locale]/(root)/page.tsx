@@ -38,8 +38,8 @@ export default async function Page() {
         <HeroSection />
       </HeroObserver>
       <ObserverWrapper animate>
-        <section id="albums">
-          <h1 className="text-3xl font-bold">{t('ChartsPage.title')}</h1>
+        <section id="albums" className="p-4">
+          <h1 className="text-3xl font-bold">{t('MainPage.Albums.title')}</h1>
           <SearchAlbums defaultData={albums} />
         </section>
       </ObserverWrapper>
