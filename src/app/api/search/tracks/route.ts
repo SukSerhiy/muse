@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { searchAlbums } from '@/lib/external/services';
+import { searchTracks } from '@/lib/external/services';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -9,11 +9,11 @@ export async function GET(req: Request) {
   const limit = Number(searchParams.get('limit')) || 10;
 
   if (!q) {
-    return;
+    return NextResponse.json({});
   }
 
   try {
-    const result = await searchAlbums(q, { index, limit });
+    const result = await searchTracks(q, { index, limit });
 
     return NextResponse.json(result);
   } catch (e: unknown) {

@@ -45,7 +45,11 @@ export const searchTracks = (
   q: string,
   pagination?: PaginationParams,
   options?: FetchOptions
-) => api.searchTracks(q, pagination, options);
+) =>
+  withErrorGuardAndMap(api.searchTracks(q, pagination, options), (res) => ({
+    ...res,
+    data: res.data.map(mapTrack),
+  }));
 
 export const searchAlbums = (
   q: string,

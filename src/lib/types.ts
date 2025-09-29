@@ -5,4 +5,4 @@ export type Like = 'like' | 'dislike';
 export type Track = Partial<
   Omit<InternalTrack, 'id' | 'title' | 'createdAt' | 'updatedAt'>
 > &
-  Pick<InternalTrack, 'id' | 'title'> & { like?: Like | null };
+  Pick<InternalTrack, 'title'> & { id: string; like?: Like | null };

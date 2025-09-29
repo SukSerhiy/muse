@@ -12,7 +12,7 @@ import {
 import { Like, Track } from '@/lib/types';
 
 type CurrentTrackOpts = {
-  id: bigint;
+  id: string;
   preview?: string | null;
 };
 
@@ -24,7 +24,7 @@ type IPlayer = {
   setIsPlaying: Dispatch<SetStateAction<boolean>>;
   currentTrackOpts: CurrentTrackOpts | null;
   setCurrentTrackOpts: Dispatch<SetStateAction<CurrentTrackOpts | null>>;
-  setLike: (id: bigint, like: Like | null) => void;
+  setLike: (id: string, like: Like | null) => void;
 };
 
 const defaultValue: IPlayer = {
@@ -50,7 +50,7 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   const [optimisticTracks, setOptimisticTracks] =
     useOptimistic<Track[]>(tracks);
 
-  const handleLike = (id: bigint, like: Like | null) => {
+  const handleLike = (id: string, like: Like | null) => {
     setOptimisticTracks((prev) =>
       prev.map((item) => {
         if (item.id === id) {

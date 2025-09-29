@@ -65,7 +65,13 @@ const TrackQueue: FC<ITrackQueue> = ({ tracks: serverTracks }) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <Button disabled={isPending} type="button" onClick={refreshPage}>
+      {/* @TODO: Удалить кнопку Revalidate */}
+      <Button
+        className="hidden"
+        disabled={isPending}
+        type="button"
+        onClick={refreshPage}
+      >
         Revalidate
       </Button>
       {serverTracks.map((item) => {

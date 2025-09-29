@@ -38,10 +38,10 @@ const Track: FC<ITrack> = ({ track, onPlay }) => {
 
   return (
     <div
-      className={`flex items-center gap-3 rounded-xs border-2 p-1.5 transition-colors duration-300 ${isActive ? 'bg-accent' : ''}`}
+      className={`flex items-center gap-3 rounded-xs border-2 p-1.5 shadow-sm transition-colors duration-300 ${isActive ? 'bg-accent' : ''}`}
     >
       <Button
-        className="rounded-full"
+        className="h-[3rem] w-[3rem] rounded-full"
         variant="ghost"
         onClick={() => onPlay(track)}
       >

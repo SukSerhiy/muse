@@ -2,30 +2,29 @@
 import debounce from 'lodash.debounce';
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
 import Loader from '@/components/shared/Loader';
 import Pagination from '@/components/shared/Pagination';
+import TrackQueue from '@/components/shared/TrackQueue';
 import { Input } from '@/components/ui/input';
-import { IChartAlbum } from '@/lib/external/types/charts';
+import { Track } from '@/lib/types';
 
-import Albums from '../Albums';
-import { SearchAlbumsProps } from './types';
+import { SearchTracksProps } from './types';
 
 const LIMIT = 10;
 
 async function fetchSearchResults(query: string, index: number = 0) {
   const res = await fetch(
-    `/api/search/albums?q=${encodeURIComponent(query)}&index=${index}&limit=${LIMIT}`
+    `/api/search/tracks?q=${encodeURIComponent(query)}&index=${index}&limit=${LIMIT}`
   );
   return res.json();
 }
 
-const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
+const SearchTracks: FC<SearchTracksProps> = ({ defaultData }) => {
   const t = useTranslations();
   const [query, setQuery] = useState('');
-  const [data, setData] = useState<IChartAlbum[]>(defaultData);
+  const [data, setData] = useState<Track[]>(defaultData);
   const [index, setIndex] = useState(0);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -74,7 +73,7 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="relative w-1/2 self-center">
+      <div className="relative w-full self-center md:w-1/2">
         <Search className="text-muted-foreground absolute mx-2 mt-1.5 h-6 w-6" />
         <Input
           value={query}
@@ -88,8 +87,8 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
       {loading ? (
         <Loader fullSize />
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-          <Albums albums={data} />
+        <div className="relative w-full self-center md:w-1/2">
+          <TrackQueue tracks={data} />
         </div>
       )}
 
@@ -105,4 +104,4 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
   );
 };
 
-export default SearchAlbums;
+export default SearchTracks;

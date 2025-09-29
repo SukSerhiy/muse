@@ -4,7 +4,7 @@ import { ITrack as ExternalTrack } from '../types';
 
 export const mapTrack: (t: ExternalTrack) => InternalTrack = (t) => {
   return {
-    id: BigInt(t.id),
+    id: String(t.id),
     title: t.title || '',
     coverSmall: t.album.cover_small,
     coverBig: t.album.cover_big,

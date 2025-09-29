@@ -20,7 +20,7 @@ const Albums: FC<IAlbumsList> = ({ albums }) => {
     <>
       {albums?.map((item) => (
         <Link href={`/album/${item.id}`} key={item.id} className="group">
-          <Card className="group-hover:bg-accent w-full transition-colors duration-300">
+          <Card className="group-hover:bg-accent w-full shadow-md transition-colors duration-300">
             <CardHeader>
               <div>
                 <CardTitle>{item.title}</CardTitle>
@@ -33,7 +33,7 @@ const Albums: FC<IAlbumsList> = ({ albums }) => {
                 width={300}
                 height={300}
                 alt="album"
-                className={`mx-auto transition-transform duration-300 group-hover:scale-[1.03] ${item.cover_big ? '' : 'filter-(--filter-plug)'}`}
+                className={`shadow-lx mx-auto rounded-xs transition-transform duration-300 group-hover:scale-[1.03] ${item.cover_big ? '' : 'filter-(--filter-plug)'}`}
               />
             </CardContent>
           </Card>
