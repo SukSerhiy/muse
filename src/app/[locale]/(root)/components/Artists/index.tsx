@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { IArtistsList } from './types';
 
+const personPlug = '/images/boy.png';
+
 const Artists: FC<IArtistsList> = async ({ artists }) => {
   return (
     <>
@@ -19,7 +21,7 @@ const Artists: FC<IArtistsList> = async ({ artists }) => {
             </CardHeader>
             <CardContent>
               <Image
-                src={item.picture_medium || ''}
+                src={item.picture_big || personPlug}
                 width={300}
                 height={300}
                 alt="artist"
