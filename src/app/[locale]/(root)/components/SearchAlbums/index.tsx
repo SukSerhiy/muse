@@ -8,7 +8,7 @@ import { FC, useMemo, useState } from 'react';
 import Loader from '@/components/shared/Loader';
 import Pagination from '@/components/shared/Pagination';
 import { Input } from '@/components/ui/input';
-import { IChartAlbum } from '@/lib/external/types/charts';
+import { IAlbum } from '@/lib/external/types';
 
 import Albums from '../Albums';
 import { SearchAlbumsProps } from './types';
@@ -25,7 +25,7 @@ async function fetchSearchResults(query: string, index: number = 0) {
 const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
   const t = useTranslations();
   const [query, setQuery] = useState('');
-  const [data, setData] = useState<IChartAlbum[]>(defaultData);
+  const [data, setData] = useState<IAlbum[]>(defaultData);
   const [index, setIndex] = useState(0);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -48,22 +48,18 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setQuery(value);
-    setLoading(true);
-    debouncedFetch(value, 0);
+    setQuery(e.target.value);
+    setIndex(0);
   };
 
   const handlePageChange = (page: number) => {
-    const newIndex = (page - 1) * LIMIT;
-    setLoading(true);
-    debouncedFetch(query, newIndex);
+    setIndex((page - 1) * LIMIT);
   };
 
   useEffect(() => {
     if (!query) {
       setData(defaultData);
-      setTotal(defaultData.length);
+      setTotal(0);
       setLoading(false);
       return;
     }

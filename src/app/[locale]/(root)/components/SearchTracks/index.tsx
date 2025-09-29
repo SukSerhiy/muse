@@ -50,19 +50,16 @@ const SearchTracks: FC<SearchTracksProps> = ({ defaultData }) => {
     const value = e.target.value;
     setQuery(value);
     setLoading(true);
-    debouncedFetch(value, 0);
   };
 
   const handlePageChange = (page: number) => {
-    const newIndex = (page - 1) * LIMIT;
-    setLoading(true);
-    debouncedFetch(query, newIndex);
+    setIndex((page - 1) * LIMIT);
   };
 
   useEffect(() => {
     if (!query) {
       setData(defaultData);
-      setTotal(defaultData.length);
+      setTotal(0);
       setLoading(false);
       return;
     }

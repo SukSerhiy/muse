@@ -1,5 +1,5 @@
-import { IChartArtist } from '@/lib/external/types/charts';
+import { IArtist } from '@/lib/external/types';
 
 export type IArtistsList = {
-  artists: IChartArtist[];
+  artists: IArtist[];
 };

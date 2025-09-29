@@ -1,4 +1,4 @@
-import { ITrack } from './';
+import { IAlbum, IArtist, ITrack } from './';
 
 export type ICharts = {
   tracks: {
@@ -6,38 +6,11 @@ export type ICharts = {
     total: number;
   };
   albums: {
-    data: IChartAlbum[];
+    data: IAlbum[];
     total: number;
   };
   artists: {
-    data: IChartArtist[];
+    data: IArtist[];
     total: number;
   };
-};
-
-export type IChartAlbum = {
-  id: number;
-  title?: string | null;
-  link?: string | null;
-  cover?: string | null;
-  cover_small?: string | null;
-  cover_medium?: string | null;
-  cover_big?: string | null;
-  cover_xl?: string | null;
-  explicit_lyrics?: boolean | null;
-  artist: {
-    id: number;
-    name?: string | null;
-  };
-};
-
-export type IChartArtist = {
-  id: number;
-  name?: string | null;
-  link?: string | null;
-  picture?: string | null;
-  picture_small?: string | null;
-  picture_medium?: string | null;
-  picture_big?: string | null;
-  picture_xl?: string | null;
 };

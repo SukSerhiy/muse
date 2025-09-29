@@ -10,8 +10,8 @@ const Artists: FC<IArtistsList> = async ({ artists }) => {
   return (
     <>
       {artists?.map((item) => (
-        <Link href={`/artist/${item.id}`} key={item.id}>
-          <Card className="w-full">
+        <Link href={`/artist/${item.id}`} key={item.id} className="group">
+          <Card className="group-hover:bg-accent w-full shadow-md transition-colors duration-300">
             <CardHeader>
               <div>
                 <CardTitle>{item.name}</CardTitle>
@@ -20,9 +20,10 @@ const Artists: FC<IArtistsList> = async ({ artists }) => {
             <CardContent>
               <Image
                 src={item.picture_medium || ''}
-                width={250}
-                height={250}
+                width={300}
+                height={300}
                 alt="artist"
+                className={`shadow-lx mx-auto rounded-xs transition-transform duration-300 group-hover:scale-[1.03] ${item.picture_big ? '' : 'filter-(--filter-plug)'}`}
               />
             </CardContent>
           </Card>
