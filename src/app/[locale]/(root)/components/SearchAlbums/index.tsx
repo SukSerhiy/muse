@@ -5,12 +5,12 @@ import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { FC, useMemo, useState } from 'react';
 
+import { AlbumsList } from '@/components/shared/ItemsList';
 import Loader from '@/components/shared/Loader';
 import Pagination from '@/components/shared/Pagination';
 import { Input } from '@/components/ui/input';
 import { IAlbum } from '@/lib/external/types';
 
-import Albums from '../Albums';
 import { SearchAlbumsProps } from './types';
 
 const LIMIT = 10;
@@ -85,7 +85,7 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
         <Loader fullSize />
       ) : (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-          <Albums albums={data} />
+          <AlbumsList albums={data} />
         </div>
       )}
 

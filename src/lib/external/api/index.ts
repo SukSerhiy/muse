@@ -1,6 +1,6 @@
 import { DEEZER_API_HOST } from '@/lib/constants';
 
-import { IAlbum, ICharts, ITrack } from '../types';
+import { IAlbum, IArtist, ICharts, ITrack } from '../types';
 import { DEFAULT_LIMIT } from './constants';
 import {
   artistEndpoints,
@@ -49,7 +49,7 @@ export const getCharts = (options?: FetchOptions) =>
 
 export const getAlbum = makeById<IAlbum>(endpoints.ALBUM);
 
-export const getArtist = makeById<IAlbum>(endpoints.ARTIST);
+export const getArtist = makeById<IArtist>(endpoints.ARTIST);
 
 export const getArtistTracks = makePaginatedById<ITrack>(
   endpoints.ARTIST,

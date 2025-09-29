@@ -1,12 +1,12 @@
 import { getTranslations } from 'next-intl/server';
 
 import ObserverWrapper from '@/components/services/ObserverWrapper';
+import { ArtistsList } from '@/components/shared/ItemsList';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { getCharts } from '@/lib/external/services';
 import { mapTracksWithLikes } from '@/lib/features/tracks/utils/mappers';
 
-import Artists from './components/Artists';
 import HeroObserver from './components/HeroObserver';
 import HeroSection from './components/HeroSection';
 import SearchAlbums from './components/SearchAlbums';
@@ -54,7 +54,7 @@ export default async function Page() {
           id="artists"
           className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4"
         >
-          <Artists artists={artists} />
+          <ArtistsList artists={artists} />
         </section>
       </ObserverWrapper>
     </>

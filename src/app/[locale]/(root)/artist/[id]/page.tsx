@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import Albums from '@/app/[locale]/(root)/components/Albums';
+import { AlbumsList } from '@/components/shared/ItemsList';
 import TrackQueue from '@/components/shared/TrackQueue';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
@@ -56,7 +56,7 @@ export default async function ArtistPage({ params }: PageProps) {
         <Link href="#">Show all</Link>
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-        <Albums albums={albums} />
+        <AlbumsList albums={albums} />
       </div>
     </div>
   );
