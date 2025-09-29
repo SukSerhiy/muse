@@ -5,6 +5,8 @@ import Link from 'next/link';
 import ModeToggle from '@/components/layout/header/ModeToggle';
 import { APP_NAME } from '@/lib/constants';
 
+import HeroObserver from './HeroObserver';
+
 const HeroSection = async () => {
   const t = await getTranslations();
 
@@ -53,3 +55,5 @@ const HeroSection = async () => {
 };
 
 export default HeroSection;
+
+export { HeroObserver };

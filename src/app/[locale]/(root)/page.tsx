@@ -2,15 +2,13 @@ import { getTranslations } from 'next-intl/server';
 
 import ObserverWrapper from '@/components/services/ObserverWrapper';
 import { ArtistsList } from '@/components/shared/ItemsList';
+import { SearchAlbums, SearchTracks } from '@/components/shared/SearchList';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { getCharts } from '@/lib/external/services';
 import { mapTracksWithLikes } from '@/lib/features/tracks/utils/mappers';
 
-import HeroObserver from './components/HeroObserver';
-import HeroSection from './components/HeroSection';
-import SearchAlbums from './components/SearchAlbums';
-import SearchTracks from './components/SearchTracks';
+import HeroSection, { HeroObserver } from './components/HeroSection';
 
 export default async function Page() {
   const t = await getTranslations();

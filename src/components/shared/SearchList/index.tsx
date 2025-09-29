@@ -2,30 +2,34 @@
 import debounce from 'lodash.debounce';
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
-import { FC, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 
-import { AlbumsList } from '@/components/shared/ItemsList';
 import Loader from '@/components/shared/Loader';
 import Pagination from '@/components/shared/Pagination';
 import { Input } from '@/components/ui/input';
-import { IAlbum } from '@/lib/external/types';
 
-import { SearchAlbumsProps } from './types';
+import SearchAlbums from './SearchAlbums';
+import SearchTracks from './SearchTracks';
 
 const LIMIT = 10;
 
-async function fetchSearchResults(query: string, index: number = 0) {
-  const res = await fetch(
-    `/api/search/albums?q=${encodeURIComponent(query)}&index=${index}&limit=${LIMIT}`
-  );
-  return res.json();
-}
+type SearchListProps<T> = {
+  defaultData: T[];
+  fetchFn: (
+    query: string,
+    index: number
+  ) => Promise<{ data: T[]; total: number }>;
+  renderResults: (data: T[]) => ReactNode;
+};
 
-const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
+function SearchList<T>({
+  defaultData,
+  fetchFn,
+  renderResults,
+}: SearchListProps<T>) {
   const t = useTranslations();
   const [query, setQuery] = useState('');
-  const [data, setData] = useState<IAlbum[]>(defaultData);
+  const [data, setData] = useState<T[]>(defaultData);
   const [index, setIndex] = useState(0);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -36,7 +40,7 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
     () =>
       debounce(async (q: string, idx: number) => {
         try {
-          const results = await fetchSearchResults(q, idx);
+          const results = await fetchFn(q, idx);
           setData(results.data);
           setTotal(results.total);
           setIndex(idx);
@@ -44,12 +48,13 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
           setLoading(false);
         }
       }, 300),
-    []
+    [fetchFn]
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
     setIndex(0);
+    setLoading(true);
   };
 
   const handlePageChange = (page: number) => {
@@ -70,7 +75,7 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="relative w-1/2 self-center">
+      <div className="relative w-full self-center md:w-1/2">
         <Search className="text-muted-foreground absolute mx-2 mt-1.5 h-6 w-6" />
         <Input
           value={query}
@@ -81,13 +86,7 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
         />
       </div>
 
-      {loading ? (
-        <Loader fullSize />
-      ) : (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-          <AlbumsList albums={data} />
-        </div>
-      )}
+      {loading ? <Loader fullSize /> : renderResults(data)}
 
       <div className="self-center">
         <Pagination
@@ -99,6 +98,8 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ defaultData }) => {
       </div>
     </div>
   );
-};
+}
 
-export default SearchAlbums;
+export default SearchList;
+
+export { SearchAlbums, SearchTracks };

@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import { IAlbum } from '@/lib/external/types';
 
-import ItemsList from '../';
+import ItemsList from './';
 
 const coverPlug = '/images/vinyl.png';
 

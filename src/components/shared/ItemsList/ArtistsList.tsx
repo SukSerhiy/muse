@@ -1,6 +1,6 @@
 import { IArtist } from '@/lib/external/types';
 
-import ItemsList from '../';
+import ItemsList from './';
 
 const personPlug = '/images/boy.png';
 
