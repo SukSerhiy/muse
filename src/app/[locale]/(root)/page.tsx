@@ -1,8 +1,11 @@
 import { getTranslations } from 'next-intl/server';
 
 import ObserverWrapper from '@/components/services/ObserverWrapper';
-import { ArtistsList } from '@/components/shared/ItemsList';
-import { SearchAlbums, SearchTracks } from '@/components/shared/SearchList';
+import {
+  SearchAlbums,
+  SearchArtist,
+  SearchTracks,
+} from '@/components/shared/SearchList';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { getCharts } from '@/lib/external/services';
@@ -48,11 +51,9 @@ export default async function Page() {
         </section>
       </ObserverWrapper>
       <ObserverWrapper animate>
-        <section
-          id="artists"
-          className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4"
-        >
-          <ArtistsList artists={artists} />
+        <section id="artists" className="my-3 px-4">
+          <h1>{t('MainPage.Artists.title')}</h1>
+          <SearchArtist defaultData={artists} />
         </section>
       </ObserverWrapper>
     </>

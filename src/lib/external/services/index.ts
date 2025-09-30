@@ -56,3 +56,9 @@ export const searchAlbums = (
   pagination?: PaginationParams,
   options?: FetchOptions
 ) => withErrorGuard(api.searchAlbums(q, pagination, options));
+
+export const searchArtists = (
+  q: string,
+  pagination?: PaginationParams,
+  options?: FetchOptions
+) => withErrorGuard(api.searchArtists(q, pagination, options));

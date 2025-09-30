@@ -7,6 +7,7 @@ export const endpoints = {
 
 export const searchEndpoinst = {
   ALBUM: 'album',
+  ARTIST: 'artist',
 };
 
 export const artistEndpoints = {

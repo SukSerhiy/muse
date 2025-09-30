@@ -9,6 +9,7 @@ import Pagination from '@/components/shared/Pagination';
 import { Input } from '@/components/ui/input';
 
 import SearchAlbums from './SearchAlbums';
+import SearchArtist from './SearchArtists';
 import SearchTracks from './SearchTracks';
 
 const LIMIT = 10;
@@ -113,4 +114,4 @@ function SearchList<T>({
 
 export default SearchList;
 
-export { SearchAlbums, SearchTracks };
+export { SearchAlbums, SearchTracks, SearchArtist };

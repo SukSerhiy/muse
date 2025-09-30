@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { searchAlbums } from '@/lib/external/services';
+import { searchArtists } from '@/lib/external/services';
 import { getSearchParams } from '@/lib/utils/routeHandlers';
 
 export async function GET(req: Request) {
@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const result = await searchAlbums(q, { index, limit });
+    const result = await searchArtists(q, { index, limit });
 
     return NextResponse.json(result);
   } catch (e: unknown) {
