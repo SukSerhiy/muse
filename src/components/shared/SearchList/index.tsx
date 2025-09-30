@@ -2,7 +2,7 @@
 import debounce from 'lodash.debounce';
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 
 import Loader from '@/components/shared/Loader';
 import Pagination from '@/components/shared/Pagination';
@@ -34,18 +34,26 @@ function SearchList<T>({
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const requestIdRef = useRef(0);
+
   const currentPage = Math.floor(index / LIMIT) + 1;
 
   const debouncedFetch = useMemo(
     () =>
-      debounce(async (q: string, idx: number) => {
+      debounce(async (q: string, idx: number, requestId: number) => {
         try {
           const results = await fetchFn(q, idx);
+          if (requestId !== requestIdRef.current) {
+            return;
+          }
+
           setData(results.data);
           setTotal(results.total);
           setIndex(idx);
         } finally {
-          setLoading(false);
+          if (requestId === requestIdRef.current) {
+            setLoading(false);
+          }
         }
       }, 300),
     [fetchFn]
@@ -63,6 +71,8 @@ function SearchList<T>({
 
   useEffect(() => {
     if (!query) {
+      requestIdRef.current++;
+
       setData(defaultData);
       setTotal(0);
       setLoading(false);
@@ -70,7 +80,8 @@ function SearchList<T>({
     }
 
     setLoading(true);
-    debouncedFetch(query, index);
+    const currentRequestId = ++requestIdRef.current;
+    debouncedFetch(query, index, currentRequestId);
   }, [query, index, defaultData, debouncedFetch]);
 
   return (
