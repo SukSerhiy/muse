@@ -5,7 +5,7 @@ import {
   SearchAlbums,
   SearchArtist,
   SearchTracks,
-} from '@/components/shared/SearchList';
+} from '@/components/shared/FetchList';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { getCharts } from '@/lib/external/services';

@@ -1,12 +1,18 @@
+import FetchList from '@/components/shared/FetchList';
 import ItemsGrid from '@/components/shared/ItemsGrid';
 import { AlbumsList } from '@/components/shared/ItemsList';
-import SearchList from '@/components/shared/SearchList';
 import { IAlbum } from '@/lib/external/types';
 
-const fetchAlbums = async (query: string, index: number) => {
-  const res = await fetch(
-    `/api/search/albums?q=${encodeURIComponent(query)}&index=${index}&limit=10`
-  );
+import { FetchFnParams } from './';
+
+const fetchAlbums = async ({ query, index }: FetchFnParams) => {
+  const params = new URLSearchParams();
+  params.append('index', String(index));
+  params.append('limit', '10');
+  if (query) {
+    params.append('q', encodeURIComponent(query));
+  }
+  const res = await fetch(`/api/search/albums?${params}`);
   return res.json();
 };
 
@@ -16,9 +22,10 @@ export default function SearchAlbums({
   defaultData: IAlbum[];
 }) {
   return (
-    <SearchList<IAlbum>
+    <FetchList<IAlbum>
       defaultData={defaultData}
       fetchFn={fetchAlbums}
+      withSearch
       renderResults={(data) => (
         <ItemsGrid>
           <AlbumsList albums={data} />

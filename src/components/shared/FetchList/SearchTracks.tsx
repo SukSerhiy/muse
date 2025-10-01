@@ -1,11 +1,17 @@
-import SearchList from '@/components/shared/SearchList';
+import FetchList from '@/components/shared/FetchList';
 import TrackQueue from '@/components/shared/TrackQueue';
 import { Track } from '@/lib/types';
 
-const fetchTracks = async (query: string, index: number) => {
-  const res = await fetch(
-    `/api/search/tracks?q=${encodeURIComponent(query)}&index=${index}&limit=10`
-  );
+import { FetchFnParams } from './';
+
+const fetchTracks = async ({ query, index }: FetchFnParams) => {
+  const params = new URLSearchParams();
+  params.append('index', String(index));
+  params.append('limit', '10');
+  if (query) {
+    params.append('q', encodeURIComponent(query));
+  }
+  const res = await fetch(`/api/search/tracks?${params}`);
   return res.json();
 };
 
@@ -15,9 +21,10 @@ export default function SearchTracks({
   defaultData: Track[];
 }) {
   return (
-    <SearchList<Track>
+    <FetchList<Track>
       defaultData={defaultData}
       fetchFn={fetchTracks}
+      withSearch
       renderResults={(data) => (
         <div className="relative w-full self-center md:w-1/2">
           <TrackQueue tracks={data} />
