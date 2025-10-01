@@ -1,5 +1,4 @@
 import FetchList from '@/components/shared/FetchList';
-import ItemsGrid from '@/components/shared/ItemsGrid';
 import { AlbumsList } from '@/components/shared/ItemsList';
 import { IAlbum } from '@/lib/external/types';
 
@@ -27,9 +26,9 @@ export default function SearchAlbums({
       fetchFn={fetchAlbums}
       withSearch
       renderResults={(data) => (
-        <ItemsGrid>
+        <div className="items-grid">
           <AlbumsList albums={data} />
-        </ItemsGrid>
+        </div>
       )}
     />
   );

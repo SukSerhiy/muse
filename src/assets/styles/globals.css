@@ -165,6 +165,12 @@
   }
 }
 
+@layer components {
+  .items-grid {
+    @apply grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4;
+  }
+}
+
 /* #hero {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),

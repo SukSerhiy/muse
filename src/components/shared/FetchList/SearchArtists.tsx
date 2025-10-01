@@ -1,5 +1,4 @@
 import FetchList from '@/components/shared/FetchList';
-import ItemsGrid from '@/components/shared/ItemsGrid';
 import { ArtistsList } from '@/components/shared/ItemsList';
 import { IArtist } from '@/lib/external/types';
 
@@ -27,9 +26,9 @@ export default function SearchArtists({
       fetchFn={fetchArtists}
       withSearch
       renderResults={(data) => (
-        <ItemsGrid>
+        <div className="items-grid">
           <ArtistsList artists={data} />
-        </ItemsGrid>
+        </div>
       )}
     />
   );
