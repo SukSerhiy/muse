@@ -20,7 +20,7 @@ type FetchFnParams = {
 };
 
 type FetchListProps<T> = {
-  defaultData: T[];
+  defaultData?: T[];
   withSearch?: boolean;
   fetchFn: (params: FetchFnParams) => Promise<{ data: T[]; total: number }>;
   renderResults: (data: T[]) => ReactNode;
@@ -34,7 +34,7 @@ function FetchList<T>({
 }: FetchListProps<T>) {
   const t = useTranslations();
   const [query, setQuery] = useState('');
-  const [data, setData] = useState<T[]>(defaultData);
+  const [data, setData] = useState<T[]>(defaultData || []);
   const [index, setIndex] = useState(0);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -51,7 +51,6 @@ function FetchList<T>({
           if (requestId !== requestIdRef.current) {
             return;
           }
-
           setData(results.data);
           setTotal(results.total);
           setIndex(params.index);
@@ -75,7 +74,7 @@ function FetchList<T>({
   };
 
   useEffect(() => {
-    if (withSearch && !query) {
+    if (withSearch && !query && defaultData) {
       requestIdRef.current++;
 
       setData(defaultData);
@@ -94,7 +93,7 @@ function FetchList<T>({
   }, [query, index, defaultData, debouncedFetch, withSearch]);
 
   useEffect(() => {
-    if (!data) {
+    if (defaultData && !data) {
       setData(defaultData);
     }
   }, [data, defaultData]);

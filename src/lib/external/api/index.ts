@@ -61,6 +61,11 @@ export const getArtistAlbums = makePaginatedById<IAlbum>(
   artistEndpoints.ALBUMS
 );
 
+export const getArtistRelated = makePaginatedById<IArtist>(
+  endpoints.ARTIST,
+  artistEndpoints.RELATED
+);
+
 export const searchTracks = makeSearch<ITrack>();
 
 export const searchAlbums = makeSearch<IAlbum>(searchEndpoinst.ALBUM);

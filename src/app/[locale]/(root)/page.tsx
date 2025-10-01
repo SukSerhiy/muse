@@ -40,19 +40,19 @@ export default async function Page() {
       </HeroObserver>
       <ObserverWrapper animate>
         <section id="albums" className="my-3 px-4">
-          <h1>{t('MainPage.Albums.title')}</h1>
+          <h2>{t('MainPage.Albums.title')}</h2>
           <SearchAlbums defaultData={albums} />
         </section>
       </ObserverWrapper>
       <ObserverWrapper animate>
         <section id="tracks" className="my-3 px-4">
-          <h1>{t('MainPage.Tracks.title')}</h1>
+          <h2>{t('MainPage.Tracks.title')}</h2>
           <SearchTracks defaultData={tracks} />
         </section>
       </ObserverWrapper>
       <ObserverWrapper animate>
         <section id="artists" className="my-3 px-4">
-          <h1>{t('MainPage.Artists.title')}</h1>
+          <h2>{t('MainPage.Artists.title')}</h2>
           <SearchArtist defaultData={artists} />
         </section>
       </ObserverWrapper>

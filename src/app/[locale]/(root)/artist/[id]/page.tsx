@@ -1,17 +1,14 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { AlbumsList } from '@/components/shared/ItemsList';
 import TrackQueue from '@/components/shared/TrackQueue';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
-import {
-  getArtist,
-  getArtistAlbums,
-  getArtistTracks,
-} from '@/lib/external/services';
+import { getArtist, getArtistTracks } from '@/lib/external/services';
 import { mapTracksWithLikes } from '@/lib/features/tracks/utils/mappers';
+
+import AlbumsList from './components/Albums';
+import RelatedArtists from './components/RelatedArtists';
 
 const avatarPlug = '/images/person.jpg';
 
@@ -36,28 +33,36 @@ export default async function ArtistPage({ params }: PageProps) {
     tracks = mapTracksWithLikes(tracks, likes);
   }
 
-  const { data: albums } = await getArtistAlbums(Number(id));
-
   const { name, picture_big: pictureBig } = artist;
 
   return (
-    <div className="">
-      <h1 className="text-2xl font-semibold">{name}</h1>
-      <Image
-        src={pictureBig || avatarPlug}
-        alt="artist"
-        width={500}
-        height={500}
-        className="rounded-xs shadow-lg"
-      />
-      <TrackQueue tracks={tracks} />
-      <div className="flex justify-between">
-        <h3>Albums</h3>
-        <Link href="#">Show all</Link>
-      </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-        <AlbumsList albums={albums} />
-      </div>
+    <div className="mb-5">
+      <section id="main" className="my-3 px-4">
+        <h1 className="text-2xl font-semibold">{name}</h1>
+        <Image
+          src={pictureBig || avatarPlug}
+          alt="artist"
+          width={500}
+          height={500}
+          className="rounded-xs shadow-lg"
+        />
+      </section>
+      <section id="tracks" className="my-3 px-4">
+        <h2>Tracks</h2>
+        <TrackQueue tracks={tracks} />
+      </section>
+      <section id="albums" className="my-3 px-4">
+        <div className="flex justify-between">
+          <h2>Albums</h2>
+        </div>
+        <AlbumsList id={id} />
+      </section>
+      <section id="artists" className="my-3 px-4">
+        <div className="flex justify-between">
+          <h2>Artists</h2>
+        </div>
+        <RelatedArtists id={id} />
+      </section>
     </div>
   );
 }

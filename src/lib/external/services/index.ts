@@ -41,6 +41,12 @@ export const getArtistAlbums = (
   options?: FetchOptions
 ) => withErrorGuard(api.getArtistAlbums(id, pagination, options));
 
+export const getArtistRelated = (
+  id: number,
+  pagination?: PaginationParams,
+  options?: FetchOptions
+) => withErrorGuard(api.getArtistRelated(id, pagination, options));
+
 export const searchTracks = (
   q: string,
   pagination?: PaginationParams,

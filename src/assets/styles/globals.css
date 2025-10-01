@@ -160,7 +160,7 @@
   button {
     cursor: pointer;
   }
-  h1 {
+  h2 {
     @apply text-3xl font-bold;
   }
 }

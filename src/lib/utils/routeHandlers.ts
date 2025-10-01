@@ -1,7 +1,9 @@
-export const getSearchParams = (searchParams: URLSearchParams) => {
-  const q = searchParams.get('q') || '';
-  const index = Number(searchParams.get('index')) || 0;
-  const limit = Number(searchParams.get('limit')) || 10;
-
-  return { q, index, limit };
+export const getSearchParams = (
+  searchParams: URLSearchParams,
+  fields: string[]
+) => {
+  return fields.reduce<Record<string, string | null>>((acc, field) => {
+    acc[field] = searchParams.get(field);
+    return acc;
+  }, {});
 };
