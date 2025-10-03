@@ -1,8 +1,7 @@
 'use client';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-
-import { doCredentionalLogin } from '@/app/actions/auth.actions';
 
 import SocialLogin from './SocialLogin';
 
@@ -11,17 +10,24 @@ const LoginForm = () => {
 
   const [error, setError] = useState('');
 
+  const { update } = useSession();
+
   async function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     try {
       const formData = new FormData(event.currentTarget);
-      const response = await doCredentionalLogin(formData);
+      const response = await signIn('credentials', {
+        redirect: false,
+        email: formData.get('email'),
+        password: formData.get('password'),
+      });
 
-      if (!!response.error) {
+      if (response.error) {
         console.error(response.error);
-        setError(response.error.message);
+        setError(response.error);
       } else {
+        update();
         router.push('/home');
       }
     } catch (e: unknown) {

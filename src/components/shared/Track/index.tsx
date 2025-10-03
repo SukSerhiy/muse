@@ -1,5 +1,6 @@
 'use client';
 import { PauseIcon, PlayIcon } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { FC, useOptimistic, useTransition } from 'react';
 
 import { likeTrack } from '@/app/actions/track.actions';
@@ -13,6 +14,10 @@ const Track: FC<ITrack> = ({ track, onPlay }) => {
   const { isPlaying, currentTrackOpts, optimisticTracks, setLike } =
     usePlayer();
 
+  const { status } = useSession();
+
+  const isAuth = status === 'authenticated';
+
   const [, startTransition] = useTransition();
 
   const isActive = currentTrackOpts?.id === track.id;
@@ -24,6 +29,7 @@ const Track: FC<ITrack> = ({ track, onPlay }) => {
     : optimisticLike;
 
   const handleLike = (isDislike?: boolean) => {
+    if (!isAuth) return;
     startTransition(async () => {
       if (!track) return;
       const newLike = isDislike ? 'dislike' : 'like';

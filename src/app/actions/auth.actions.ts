@@ -4,30 +4,13 @@ import type { ProviderId } from 'next-auth/providers';
 import { hash } from 'bcrypt';
 import * as z from 'zod';
 
-import { signIn, signOut } from '@/lib/auth';
+import { signIn } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { signUpSchema } from '@/lib/validation';
 
 export async function doSocialLogin(formData: FormData) {
   const action = formData.get('action');
   await signIn(action as ProviderId, { redirectTo: '/home' });
-}
-
-export async function doLogout() {
-  await signOut({ redirectTo: '/' });
-}
-
-export async function doCredentionalLogin(formData: FormData) {
-  try {
-    const response = await signIn('credentials', {
-      email: formData.get('email'),
-      password: formData.get('password'),
-      redirect: false,
-    });
-    return response;
-  } catch (err: unknown) {
-    throw err;
-  }
 }
 
 type FormState = {

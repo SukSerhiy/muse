@@ -3,6 +3,7 @@ import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { FC, useEffect, useState } from 'react';
 
+import withAuth from '@/components/hoc/withAuth';
 import { Button } from '@/components/ui/button';
 
 import { LikeButtonProps } from './types';
@@ -35,4 +36,4 @@ const LikeButton: FC<LikeButtonProps> = ({ isActive, isDislike, onClick }) => {
   );
 };
 
-export default LikeButton;
+export default withAuth(LikeButton);

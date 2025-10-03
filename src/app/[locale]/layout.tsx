@@ -9,7 +9,7 @@ import { Inter } from 'next/font/google';
 
 import { HeaderVisibilityProvider } from '@/components/context/HeaderVisibilityProvider';
 import { PlayerProvider } from '@/components/context/PlayerProvider';
-// import SessionProvider from '@/components/context/SessionProvider';
+import SessionProvider from '@/components/context/SessionProvider';
 import Player from '@/components/shared/Player';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
@@ -48,15 +48,15 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
-            {/* <SessionProvider> */}
-            <HeaderVisibilityProvider>
-              <PlayerProvider>
-                {children}
-                <Player />
-              </PlayerProvider>
-            </HeaderVisibilityProvider>
-            <Toaster position="top-center" />
-            {/* </SessionProvider> */}
+            <SessionProvider>
+              <HeaderVisibilityProvider>
+                <PlayerProvider>
+                  {children}
+                  <Player />
+                </PlayerProvider>
+              </HeaderVisibilityProvider>
+              <Toaster position="top-center" />
+            </SessionProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

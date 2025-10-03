@@ -15,6 +15,13 @@
     }
   },
   "Shared": {
-    "search_placeholder": "Search..."
+    "search_placeholder": "Search...",
+    "LoginDialog": {
+      "title": "Log in",
+      "description": "Please log in to continue."
+    },
+    "Header": {
+      "login": "Log in"
+    }
   }
 }

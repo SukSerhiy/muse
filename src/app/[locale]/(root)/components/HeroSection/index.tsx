@@ -2,9 +2,10 @@ import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import ModeToggle from '@/components/layout/header/ModeToggle';
+import { ModeToggle } from '@/components/layout/header';
 import { APP_NAME } from '@/lib/constants';
 
+import HeroAuth from './HeroAuth';
 import HeroObserver from './HeroObserver';
 
 const HeroSection = async () => {
@@ -38,8 +39,11 @@ const HeroSection = async () => {
             <div className="border-foreground mx-2 hidden border-b-2 group-hover:block"></div>
           </div>
         </div>
-        <div className="min-w-12">
-          <ModeToggle />
+        <div className="flex items-center gap-3">
+          <HeroAuth />
+          <div className="min-w-12">
+            <ModeToggle />
+          </div>
         </div>
       </div>
       <div className="text-hero-foreground flex flex-1 flex-col items-center justify-center">

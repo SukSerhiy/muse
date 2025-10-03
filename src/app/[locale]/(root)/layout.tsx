@@ -1,5 +1,5 @@
-import DynamicMargin from '@/components/layout/DynamicMargin';
 import Header from '@/components/layout/header';
+import DynamicMargin from '@/components/shared/DynamicMargin';
 
 export default async function RootLayout({
   children,

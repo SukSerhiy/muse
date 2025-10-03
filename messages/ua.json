@@ -15,6 +15,13 @@
     }
   },
   "Shared": {
-    "search_placeholder": "Search..."
+    "search_placeholder": "Шукати...",
+    "LoginDialog": {
+      "title": "Увійти",
+      "description": "Будь ласка, увійдіть, щоб продовжити."
+    },
+    "Header": {
+      "login": "Увійти"
+    }
   }
 }

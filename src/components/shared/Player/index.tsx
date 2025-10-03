@@ -1,5 +1,6 @@
 'use client';
 import { Volume, Volume1, Volume2, VolumeX } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
@@ -22,6 +23,10 @@ const Player = () => {
     setLike,
     optimisticTracks,
   } = usePlayer();
+
+  const { status } = useSession();
+
+  const isAuth = status === 'authenticated';
 
   const [dragProgress, setDragProgress] = useState<number | null>(null);
   const [progress, setProgress] = useState<number>(0);
@@ -89,6 +94,7 @@ const Player = () => {
   };
 
   const handleLike = (isDislike?: boolean) => {
+    if (!isAuth) return;
     startTransition(async () => {
       if (!currentTrack) return;
       const newLike = isDislike ? 'dislike' : 'like';

@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import LoginForm from './components/LoginForm';
+import LoginForm from '@/components/shared/Login/LoginForm';
 
-const page = () => {
+const LoginPage = () => {
   return (
     <div className="m-4 flex flex-col items-center justify-center">
       <h1 className="my-3 text-3xl">Hey, time to Sign In</h1>
@@ -17,4 +17,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default LoginPage;
