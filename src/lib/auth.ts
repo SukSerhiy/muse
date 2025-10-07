@@ -88,7 +88,7 @@ export const {
             username: user.name,
             email: user.email,
             image: user.image,
-            provider: provider as Provider,
+            provider: provider?.toUpperCase() as Provider,
           },
         });
       }

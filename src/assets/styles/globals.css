@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'react-image-crop/dist/ReactCrop.css';
 
 /* Hide Next.js Fast Refresh / Debug Overlay  */
 #__next-build-watcher,
