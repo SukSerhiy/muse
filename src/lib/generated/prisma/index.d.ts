@@ -2558,19 +2558,17 @@ export namespace Prisma {
   };
 
   export type TrackAvgAggregateOutputType = {
-    id: number | null;
     artistSourceId: number | null;
     albumSourceId: number | null;
   };
 
   export type TrackSumAggregateOutputType = {
-    id: bigint | null;
     artistSourceId: number | null;
     albumSourceId: number | null;
   };
 
   export type TrackMinAggregateOutputType = {
-    id: bigint | null;
+    id: string | null;
     title: string | null;
     coverSmall: string | null;
     coverBig: string | null;
@@ -2584,7 +2582,7 @@ export namespace Prisma {
   };
 
   export type TrackMaxAggregateOutputType = {
-    id: bigint | null;
+    id: string | null;
     title: string | null;
     coverSmall: string | null;
     coverBig: string | null;
@@ -2613,13 +2611,11 @@ export namespace Prisma {
   };
 
   export type TrackAvgAggregateInputType = {
-    id?: true;
     artistSourceId?: true;
     albumSourceId?: true;
   };
 
   export type TrackSumAggregateInputType = {
-    id?: true;
     artistSourceId?: true;
     albumSourceId?: true;
   };
@@ -2757,7 +2753,7 @@ export namespace Prisma {
   };
 
   export type TrackGroupByOutputType = {
-    id: bigint;
+    id: string;
     title: string;
     coverSmall: string | null;
     coverBig: string | null;
@@ -2899,7 +2895,7 @@ export namespace Prisma {
     };
     scalars: $Extensions.GetPayloadResult<
       {
-        id: bigint;
+        id: string;
         title: string;
         coverSmall: string | null;
         coverBig: string | null;
@@ -3507,7 +3503,7 @@ export namespace Prisma {
    * Fields of the Track model
    */
   interface TrackFieldRefs {
-    readonly id: FieldRef<'Track', 'BigInt'>;
+    readonly id: FieldRef<'Track', 'String'>;
     readonly title: FieldRef<'Track', 'String'>;
     readonly coverSmall: FieldRef<'Track', 'String'>;
     readonly coverBig: FieldRef<'Track', 'String'>;
@@ -3992,18 +3988,16 @@ export namespace Prisma {
 
   export type LikeAvgAggregateOutputType = {
     id: number | null;
-    trackId: number | null;
   };
 
   export type LikeSumAggregateOutputType = {
     id: number | null;
-    trackId: bigint | null;
   };
 
   export type LikeMinAggregateOutputType = {
     id: number | null;
     userId: string | null;
-    trackId: bigint | null;
+    trackId: string | null;
     isDislike: boolean | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -4012,7 +4006,7 @@ export namespace Prisma {
   export type LikeMaxAggregateOutputType = {
     id: number | null;
     userId: string | null;
-    trackId: bigint | null;
+    trackId: string | null;
     isDislike: boolean | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -4030,12 +4024,10 @@ export namespace Prisma {
 
   export type LikeAvgAggregateInputType = {
     id?: true;
-    trackId?: true;
   };
 
   export type LikeSumAggregateInputType = {
     id?: true;
-    trackId?: true;
   };
 
   export type LikeMinAggregateInputType = {
@@ -4158,7 +4150,7 @@ export namespace Prisma {
   export type LikeGroupByOutputType = {
     id: number;
     userId: string;
-    trackId: bigint;
+    trackId: string;
     isDislike: boolean | null;
     createdAt: Date;
     updatedAt: Date | null;
@@ -4275,7 +4267,7 @@ export namespace Prisma {
       {
         id: number;
         userId: string;
-        trackId: bigint;
+        trackId: string;
         isDislike: boolean | null;
         createdAt: Date;
         updatedAt: Date | null;
@@ -4894,7 +4886,7 @@ export namespace Prisma {
   interface LikeFieldRefs {
     readonly id: FieldRef<'Like', 'Int'>;
     readonly userId: FieldRef<'Like', 'String'>;
-    readonly trackId: FieldRef<'Like', 'BigInt'>;
+    readonly trackId: FieldRef<'Like', 'String'>;
     readonly isDislike: FieldRef<'Like', 'Boolean'>;
     readonly createdAt: FieldRef<'Like', 'DateTime'>;
     readonly updatedAt: FieldRef<'Like', 'DateTime'>;
@@ -5471,22 +5463,6 @@ export namespace Prisma {
   >;
 
   /**
-   * Reference to a field of type 'BigInt'
-   */
-  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<
-    $PrismaModel,
-    'BigInt'
-  >;
-
-  /**
-   * Reference to a field of type 'BigInt[]'
-   */
-  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<
-    $PrismaModel,
-    'BigInt[]'
-  >;
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<
@@ -5619,7 +5595,7 @@ export namespace Prisma {
     AND?: TrackWhereInput | TrackWhereInput[];
     OR?: TrackWhereInput[];
     NOT?: TrackWhereInput | TrackWhereInput[];
-    id?: BigIntFilter<'Track'> | bigint | number;
+    id?: StringFilter<'Track'> | string;
     title?: StringFilter<'Track'> | string;
     coverSmall?: StringNullableFilter<'Track'> | string | null;
     coverBig?: StringNullableFilter<'Track'> | string | null;
@@ -5650,7 +5626,7 @@ export namespace Prisma {
 
   export type TrackWhereUniqueInput = Prisma.AtLeast<
     {
-      id?: bigint | number;
+      id?: string;
       AND?: TrackWhereInput | TrackWhereInput[];
       OR?: TrackWhereInput[];
       NOT?: TrackWhereInput | TrackWhereInput[];
@@ -5696,7 +5672,7 @@ export namespace Prisma {
     NOT?:
       | TrackScalarWhereWithAggregatesInput
       | TrackScalarWhereWithAggregatesInput[];
-    id?: BigIntWithAggregatesFilter<'Track'> | bigint | number;
+    id?: StringWithAggregatesFilter<'Track'> | string;
     title?: StringWithAggregatesFilter<'Track'> | string;
     coverSmall?: StringNullableWithAggregatesFilter<'Track'> | string | null;
     coverBig?: StringNullableWithAggregatesFilter<'Track'> | string | null;
@@ -5719,7 +5695,7 @@ export namespace Prisma {
     NOT?: LikeWhereInput | LikeWhereInput[];
     id?: IntFilter<'Like'> | number;
     userId?: StringFilter<'Like'> | string;
-    trackId?: BigIntFilter<'Like'> | bigint | number;
+    trackId?: StringFilter<'Like'> | string;
     isDislike?: BoolNullableFilter<'Like'> | boolean | null;
     createdAt?: DateTimeFilter<'Like'> | Date | string;
     updatedAt?: DateTimeNullableFilter<'Like'> | Date | string | null;
@@ -5746,7 +5722,7 @@ export namespace Prisma {
       OR?: LikeWhereInput[];
       NOT?: LikeWhereInput | LikeWhereInput[];
       userId?: StringFilter<'Like'> | string;
-      trackId?: BigIntFilter<'Like'> | bigint | number;
+      trackId?: StringFilter<'Like'> | string;
       isDislike?: BoolNullableFilter<'Like'> | boolean | null;
       createdAt?: DateTimeFilter<'Like'> | Date | string;
       updatedAt?: DateTimeNullableFilter<'Like'> | Date | string | null;
@@ -5780,7 +5756,7 @@ export namespace Prisma {
       | LikeScalarWhereWithAggregatesInput[];
     id?: IntWithAggregatesFilter<'Like'> | number;
     userId?: StringWithAggregatesFilter<'Like'> | string;
-    trackId?: BigIntWithAggregatesFilter<'Like'> | bigint | number;
+    trackId?: StringWithAggregatesFilter<'Like'> | string;
     isDislike?: BoolNullableWithAggregatesFilter<'Like'> | boolean | null;
     createdAt?: DateTimeWithAggregatesFilter<'Like'> | Date | string;
     updatedAt?:
@@ -5904,7 +5880,7 @@ export namespace Prisma {
   };
 
   export type TrackCreateInput = {
-    id: bigint | number;
+    id: string;
     title: string;
     coverSmall?: string | null;
     coverBig?: string | null;
@@ -5919,7 +5895,7 @@ export namespace Prisma {
   };
 
   export type TrackUncheckedCreateInput = {
-    id: bigint | number;
+    id: string;
     title: string;
     coverSmall?: string | null;
     coverBig?: string | null;
@@ -5934,7 +5910,7 @@ export namespace Prisma {
   };
 
   export type TrackUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number;
+    id?: StringFieldUpdateOperationsInput | string;
     title?: StringFieldUpdateOperationsInput | string;
     coverSmall?: NullableStringFieldUpdateOperationsInput | string | null;
     coverBig?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -5953,7 +5929,7 @@ export namespace Prisma {
   };
 
   export type TrackUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number;
+    id?: StringFieldUpdateOperationsInput | string;
     title?: StringFieldUpdateOperationsInput | string;
     coverSmall?: NullableStringFieldUpdateOperationsInput | string | null;
     coverBig?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -5972,7 +5948,7 @@ export namespace Prisma {
   };
 
   export type TrackCreateManyInput = {
-    id: bigint | number;
+    id: string;
     title: string;
     coverSmall?: string | null;
     coverBig?: string | null;
@@ -5986,7 +5962,7 @@ export namespace Prisma {
   };
 
   export type TrackUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number;
+    id?: StringFieldUpdateOperationsInput | string;
     title?: StringFieldUpdateOperationsInput | string;
     coverSmall?: NullableStringFieldUpdateOperationsInput | string | null;
     coverBig?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -6004,7 +5980,7 @@ export namespace Prisma {
   };
 
   export type TrackUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number;
+    id?: StringFieldUpdateOperationsInput | string;
     title?: StringFieldUpdateOperationsInput | string;
     coverSmall?: NullableStringFieldUpdateOperationsInput | string | null;
     coverBig?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -6032,7 +6008,7 @@ export namespace Prisma {
   export type LikeUncheckedCreateInput = {
     id?: number;
     userId: string;
-    trackId: bigint | number;
+    trackId: string;
     isDislike?: boolean | null;
     createdAt?: Date | string;
     updatedAt?: Date | string | null;
@@ -6053,7 +6029,7 @@ export namespace Prisma {
   export type LikeUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number;
     userId?: StringFieldUpdateOperationsInput | string;
-    trackId?: BigIntFieldUpdateOperationsInput | bigint | number;
+    trackId?: StringFieldUpdateOperationsInput | string;
     isDislike?: NullableBoolFieldUpdateOperationsInput | boolean | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?:
@@ -6066,7 +6042,7 @@ export namespace Prisma {
   export type LikeCreateManyInput = {
     id?: number;
     userId: string;
-    trackId: bigint | number;
+    trackId: string;
     isDislike?: boolean | null;
     createdAt?: Date | string;
     updatedAt?: Date | string | null;
@@ -6085,7 +6061,7 @@ export namespace Prisma {
   export type LikeUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number;
     userId?: StringFieldUpdateOperationsInput | string;
-    trackId?: BigIntFieldUpdateOperationsInput | bigint | number;
+    trackId?: StringFieldUpdateOperationsInput | string;
     isDislike?: NullableBoolFieldUpdateOperationsInput | boolean | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?:
@@ -6260,17 +6236,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>;
   };
 
-  export type BigIntFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>;
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>;
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    not?: NestedBigIntFilter<$PrismaModel> | bigint | number;
-  };
-
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null;
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
@@ -6308,7 +6273,6 @@ export namespace Prisma {
   };
 
   export type TrackAvgOrderByAggregateInput = {
-    id?: SortOrder;
     artistSourceId?: SortOrder;
     albumSourceId?: SortOrder;
   };
@@ -6342,25 +6306,8 @@ export namespace Prisma {
   };
 
   export type TrackSumOrderByAggregateInput = {
-    id?: SortOrder;
     artistSourceId?: SortOrder;
     albumSourceId?: SortOrder;
-  };
-
-  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>;
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>;
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number;
-    _count?: NestedIntFilter<$PrismaModel>;
-    _avg?: NestedFloatFilter<$PrismaModel>;
-    _sum?: NestedBigIntFilter<$PrismaModel>;
-    _min?: NestedBigIntFilter<$PrismaModel>;
-    _max?: NestedBigIntFilter<$PrismaModel>;
   };
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -6421,7 +6368,7 @@ export namespace Prisma {
 
   export type LikeUserIdTrackIdCompoundUniqueInput = {
     userId: string;
-    trackId: bigint | number;
+    trackId: string;
   };
 
   export type LikeCountOrderByAggregateInput = {
@@ -6435,7 +6382,6 @@ export namespace Prisma {
 
   export type LikeAvgOrderByAggregateInput = {
     id?: SortOrder;
-    trackId?: SortOrder;
   };
 
   export type LikeMaxOrderByAggregateInput = {
@@ -6458,7 +6404,6 @@ export namespace Prisma {
 
   export type LikeSumOrderByAggregateInput = {
     id?: SortOrder;
-    trackId?: SortOrder;
   };
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -6597,14 +6542,6 @@ export namespace Prisma {
       | LikeCreateOrConnectWithoutTrackInput[];
     createMany?: LikeCreateManyTrackInputEnvelope;
     connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[];
-  };
-
-  export type BigIntFieldUpdateOperationsInput = {
-    set?: bigint | number;
-    increment?: bigint | number;
-    decrement?: bigint | number;
-    multiply?: bigint | number;
-    divide?: bigint | number;
   };
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -6870,17 +6807,6 @@ export namespace Prisma {
       _max?: NestedDateTimeNullableFilter<$PrismaModel>;
     };
 
-  export type NestedBigIntFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>;
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>;
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    not?: NestedBigIntFilter<$PrismaModel> | bigint | number;
-  };
-
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>;
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>;
@@ -6890,33 +6816,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>;
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>;
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string;
-  };
-
-  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>;
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>;
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>;
-    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number;
-    _count?: NestedIntFilter<$PrismaModel>;
-    _avg?: NestedFloatFilter<$PrismaModel>;
-    _sum?: NestedBigIntFilter<$PrismaModel>;
-    _min?: NestedBigIntFilter<$PrismaModel>;
-    _max?: NestedBigIntFilter<$PrismaModel>;
-  };
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>;
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>;
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>;
-    lt?: number | FloatFieldRefInput<$PrismaModel>;
-    lte?: number | FloatFieldRefInput<$PrismaModel>;
-    gt?: number | FloatFieldRefInput<$PrismaModel>;
-    gte?: number | FloatFieldRefInput<$PrismaModel>;
-    not?: NestedFloatFilter<$PrismaModel> | number;
   };
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -6981,6 +6880,17 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>;
   };
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatFilter<$PrismaModel> | number;
+  };
+
   export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null;
     not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null;
@@ -6998,7 +6908,7 @@ export namespace Prisma {
 
   export type LikeUncheckedCreateWithoutUserInput = {
     id?: number;
-    trackId: bigint | number;
+    trackId: string;
     isDislike?: boolean | null;
     createdAt?: Date | string;
     updatedAt?: Date | string | null;
@@ -7048,7 +6958,7 @@ export namespace Prisma {
     NOT?: LikeScalarWhereInput | LikeScalarWhereInput[];
     id?: IntFilter<'Like'> | number;
     userId?: StringFilter<'Like'> | string;
-    trackId?: BigIntFilter<'Like'> | bigint | number;
+    trackId?: StringFilter<'Like'> | string;
     isDislike?: BoolNullableFilter<'Like'> | boolean | null;
     createdAt?: DateTimeFilter<'Like'> | Date | string;
     updatedAt?: DateTimeNullableFilter<'Like'> | Date | string | null;
@@ -7141,7 +7051,7 @@ export namespace Prisma {
   };
 
   export type TrackCreateWithoutLikeInput = {
-    id: bigint | number;
+    id: string;
     title: string;
     coverSmall?: string | null;
     coverBig?: string | null;
@@ -7155,7 +7065,7 @@ export namespace Prisma {
   };
 
   export type TrackUncheckedCreateWithoutLikeInput = {
-    id: bigint | number;
+    id: string;
     title: string;
     coverSmall?: string | null;
     coverBig?: string | null;
@@ -7252,7 +7162,7 @@ export namespace Prisma {
   };
 
   export type TrackUpdateWithoutLikeInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number;
+    id?: StringFieldUpdateOperationsInput | string;
     title?: StringFieldUpdateOperationsInput | string;
     coverSmall?: NullableStringFieldUpdateOperationsInput | string | null;
     coverBig?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -7270,7 +7180,7 @@ export namespace Prisma {
   };
 
   export type TrackUncheckedUpdateWithoutLikeInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number;
+    id?: StringFieldUpdateOperationsInput | string;
     title?: StringFieldUpdateOperationsInput | string;
     coverSmall?: NullableStringFieldUpdateOperationsInput | string | null;
     coverBig?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -7289,7 +7199,7 @@ export namespace Prisma {
 
   export type LikeCreateManyUserInput = {
     id?: number;
-    trackId: bigint | number;
+    trackId: string;
     isDislike?: boolean | null;
     createdAt?: Date | string;
     updatedAt?: Date | string | null;
@@ -7308,7 +7218,7 @@ export namespace Prisma {
 
   export type LikeUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number;
-    trackId?: BigIntFieldUpdateOperationsInput | bigint | number;
+    trackId?: StringFieldUpdateOperationsInput | string;
     isDislike?: NullableBoolFieldUpdateOperationsInput | boolean | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?:
@@ -7320,7 +7230,7 @@ export namespace Prisma {
 
   export type LikeUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number;
-    trackId?: BigIntFieldUpdateOperationsInput | bigint | number;
+    trackId?: StringFieldUpdateOperationsInput | string;
     isDislike?: NullableBoolFieldUpdateOperationsInput | boolean | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?:

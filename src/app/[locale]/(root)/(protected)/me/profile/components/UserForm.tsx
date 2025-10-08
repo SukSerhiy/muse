@@ -135,13 +135,17 @@ const UserForm = () => {
 
           <FormField
             control={form.control}
-            name="username"
+            name="country"
             defaultValue={state.fields?.country}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Country</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your country..." {...field} />
+                  <Input
+                    placeholder="Enter your country..."
+                    {...field}
+                    value={field.value ?? ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -159,6 +163,7 @@ const UserForm = () => {
                   <Input
                     placeholder="Enter something about yourself..."
                     {...field}
+                    value={field.value ?? ''}
                   />
                 </FormControl>
                 <FormMessage />

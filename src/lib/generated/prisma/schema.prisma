@@ -33,7 +33,7 @@ model User {
 }
 
 model Track {
-  id             BigInt    @id
+  id             String    @id
   title          String
   coverSmall     String?
   coverBig       String?
@@ -50,7 +50,7 @@ model Track {
 model Like {
   id        Int       @id @default(autoincrement())
   userId    String
-  trackId   BigInt
+  trackId   String
   user      User      @relation(fields: [userId], references: [id])
   track     Track     @relation(fields: [trackId], references: [id])
   isDislike Boolean?  @default(false)
