@@ -1,3 +1,4 @@
+import { Provider } from '@prisma/client';
 import { compare } from 'bcrypt';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -5,7 +6,6 @@ import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 
 import { db } from './db';
-import { Provider } from './generated/prisma';
 
 export const {
   handlers: { GET, POST },

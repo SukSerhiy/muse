@@ -1,4 +1,4 @@
-import { Track as InternalTrack } from '@/lib/generated/prisma/client';
+import { Track as InternalTrack } from '@prisma/client';
 
 export type Like = 'like' | 'dislike';
 

@@ -1,4 +1,5 @@
-import { Like } from '@/lib/generated/prisma/client';
+import { Like } from '@prisma/client';
+
 import { Like as LikeValue, Track } from '@/lib/types';
 
 export const mapTracksWithLikes = (tracks: Track[], likes: Like[]): Track[] => {
