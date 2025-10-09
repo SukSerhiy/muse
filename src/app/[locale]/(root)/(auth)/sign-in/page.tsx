@@ -9,8 +9,8 @@ const LoginPage = () => {
       <LoginForm />
       <p className="my-3">
         Don&apos;t you have an account?
-        <Link href="register" className="mx-2 underline">
-          Register
+        <Link href="/sign-up" className="mx-2 underline">
+          Sign up
         </Link>
       </p>
     </div>
