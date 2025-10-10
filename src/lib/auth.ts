@@ -1,3 +1,4 @@
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import { Provider } from '@prisma/client';
 import { compare } from 'bcrypt';
 import NextAuth from 'next-auth';
@@ -16,6 +17,7 @@ export const {
   session: {
     strategy: 'jwt',
   },
+  adapter: PrismaAdapter(db),
   providers: [
     CredentialsProvider({
       async authorize(credentials) {

@@ -85,7 +85,7 @@ const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your nickname..." {...field} />
+                  <Input placeholder="Enter your nickname" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -99,7 +99,7 @@ const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="mail@example.com" {...field} />
+                  <Input placeholder="Enter your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -149,19 +149,11 @@ const SignUpForm = () => {
         or
       </div>
       <p className="mt-2 text-center text-sm text-gray-600">
-        If you don&apos;t have an account, please&nbsp;
+        if you already have an account, please&nbsp;
         <Link className="text-blue-500 hover:underline" href="/sign-in">
           Sign in
         </Link>
       </p>
-      <Button
-        type="button"
-        onClick={() => {
-          toast('Event has been created');
-        }}
-      >
-        Click toast
-      </Button>
     </Form>
   );
 };

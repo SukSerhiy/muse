@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 const DynamicMargin = () => {
   const pathname = usePathname();
 
-  const className = pathname === '/' ? '' : 'mt-[5rem]';
+  const className = pathname === '/' ? '' : 'h-[5rem]';
 
   return <div className={className} />;
 };
