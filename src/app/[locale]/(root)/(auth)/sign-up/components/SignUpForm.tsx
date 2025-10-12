@@ -136,11 +136,11 @@ const SignUpForm = () => {
           />
         </div>
         <Button disabled={isLoadingState} className="mt-6 w-full" type="submit">
-          {t(`SignUp.Form.SubmitBtn${isLoadingState ? 'loading' : 'title'}`)}
+          {t(`SignUp.Form.SubmitBtn.${isLoadingState ? 'loading' : 'title'}`)}
         </Button>
       </form>
       <div className="mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400">
-        or
+        {t('SignUp.or')}
       </div>
       <p className="mt-2 text-center text-sm text-gray-600">
         {t('SignUp.if_you_have_account')}

@@ -47,13 +47,36 @@
       }
     },
     "if_you_have_account": "Якщо у вас уже є обліковий запис, будь ласка,",
+    "or": "або",
     "sign_in": "Увійдіть",
     "success": "Реєстрацію успішно завершено!"
   },
+  "SignIn": {
+    "title": "Увійти",
+    "Form": {
+      "Fields": {
+        "Email": {
+          "title": "Електронна пошта",
+          "placeholder": "Введіть свою електронну пошту..."
+        },
+        "Password": {
+          "title": "Пароль",
+          "placeholder": "Введіть свій пароль..."
+        }
+      },
+      "SubmitBtn": {
+        "title": "Увійти",
+        "loading": "Надсилання..."
+      }
+    }
+  },
   "Errors": {
     "email_is_already_in_use": "Цей email вже використовується",
+    "invalid_credentials": "Невірний email або пароль",
+    "default": "Щось пішло не так...",
     "Validation": {
       "email_is_required": "Електронна пошта є обов’язковою",
+      "invalid_email": "Невірний формат email",
       "password_is_required": "Пароль є обов’язковим",
       "password_length": "Пароль має містити щонайменше 8 символів",
       "password_format": "Пароль має бути не менше 8 символів і містити великі та малі літери, цифру й спеціальний символ.",

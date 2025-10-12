@@ -23,7 +23,7 @@ const SocialLogins = () => {
       </button>
 
       <button
-        className="hover:bg-accent m-1 rounded-md p-1 transition-all duration-200"
+        className="hover:bg-accent m-1 ml-5 rounded-md p-1 transition-all duration-200"
         type="submit"
         name="action"
         value="github"

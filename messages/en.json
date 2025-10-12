@@ -47,13 +47,36 @@
       }
     },
     "if_you_have_account": "If you don't have an account, please",
+    "or": "or",
     "sign_in": "Sign in",
     "success": "Sign Up Successfully Completed!"
   },
+  "SignIn": {
+    "title": "Sign In",
+    "Form": {
+      "Fields": {
+        "Email": {
+          "title": "Email",
+          "placeholder": "Enter your email..."
+        },
+        "Password": {
+          "title": "Password",
+          "placeholder": "Enter your password..."
+        }
+      },
+      "SubmitBtn": {
+        "title": "Sign in",
+        "loading": "Sending..."
+      }
+    }
+  },
   "Errors": {
     "email_is_already_in_use": "This email is already in use",
+    "invalid_credentials": "Invalid email or password",
+    "default": "Something went wrong...",
     "Validation": {
       "email_is_required": "Email is required",
+      "invalid_email": "Invalid email format",
       "password_is_required": "Password is required",
       "password_length": "Password must contain at least 8 characters",
       "password_format": "Password must be at least 8 characters long and include uppercase, lowercase, number and special character.",

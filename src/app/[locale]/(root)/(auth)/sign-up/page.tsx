@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server';
 
 import SignUpForm from './components/SignUpForm';
 
-export default async function Page() {
+export default async function SignUpPage() {
   const t = await getTranslations();
 
   return (

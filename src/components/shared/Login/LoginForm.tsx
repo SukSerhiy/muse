@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn, useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { useRef, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -30,60 +31,68 @@ const LoginForm = () => {
     },
   });
 
+  const t = useTranslations();
+
   const { handleSubmit } = form;
+
+  const submitRef = useRef<HTMLButtonElement>(null);
 
   const router = useRouter();
 
-  const [serverError, setServerError] = useState('');
-
   const { update } = useSession();
 
-  async function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const [isPending, startTransition] = useTransition();
 
-    try {
-      const formData = new FormData(event.currentTarget);
-      const response = await signIn('credentials', {
-        redirect: false,
-        email: formData.get('email'),
-        password: formData.get('password'),
-      });
-
-      if (response.error) {
-        console.error(response.error);
-        setServerError(response.error);
-      } else {
-        update();
-        router.push('/');
-      }
-    } catch (e: unknown) {
-      setServerError('Check your Credentials');
-      console.error(e);
-    }
-  }
-
-  const onSubmit = handleSubmit(async (values) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // if (!isValid) return;
-    const formData = new FormData();
     const { email, password } = values;
-    formData.append('email', email);
-    formData.append('password', password);
-    // action(formData);
-  });
+
+    startTransition(async () => {
+      try {
+        const response = await signIn('credentials', {
+          redirect: false,
+          email,
+          password,
+        });
+
+        if (response.error) {
+          if (response.error === 'Configuration') {
+            toast(t('Errors.invalid_credentials'));
+          } else {
+            toast(t('Errors.default'));
+          }
+          console.error(response.error);
+        } else {
+          update();
+          router.push('/');
+        }
+      } catch (e: unknown) {
+        toast(t('Errors.default'));
+        if (e instanceof Error) {
+          console.error(e.message);
+        } else {
+          console.error(e);
+        }
+      }
+    });
+  };
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={handleFormSubmit} className="w-full">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           <div className="space-y-2">
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('SignIn.Form.Fields.Email.title')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your email" {...field} />
+                    <Input
+                      placeholder={t('SignIn.Form.Fields.Email.placeholder')}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -94,11 +103,13 @@ const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>
+                    {t('SignIn.Form.Fields.Password.title')}
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder="Enter your password"
+                      placeholder={t('SignIn.Form.Fields.Password.placeholder')}
                       {...field}
                     />
                   </FormControl>
@@ -107,15 +118,27 @@ const LoginForm = () => {
               )}
             />
           </div>
+          <button
+            ref={submitRef}
+            type="submit"
+            disabled={isPending}
+            className="hidden"
+          />
         </form>
         <div className="my-2 flex items-center justify-center">
           <SocialLogin />
         </div>
-        <Button className="w-full" type="submit">
-          Sign in
+        <Button
+          className="w-full"
+          type="button"
+          disabled={isPending}
+          onClick={() => {
+            submitRef.current?.click();
+          }}
+        >
+          {t(`SignIn.Form.SubmitBtn.${isPending ? 'loading' : 'title'}`)}
         </Button>
       </Form>
-      <div className="text-xl text-red-500">{serverError}</div>
     </>
   );
 };
