@@ -3,7 +3,7 @@ import { DefaultSession, DefaultUser } from 'next-auth';
 declare module 'next-auth' {
   type User = {
     id: string;
-    username?: string;
+    name?: string;
   } & DefaultUser;
 
   type Session = {

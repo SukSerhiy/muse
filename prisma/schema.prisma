@@ -13,48 +13,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Provider {
-  CREDENTIALS
-  GOOGLE
-  GITHUB
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  name          String?
+  password      String?
+  image         String?
+  customAvatar  String?   @map("custom_avatar")
+  dob           DateTime?
+  country       String?
+  gender        String?
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @updatedAt
+  accounts      Account[]
+  Like          Like[]
+
+  @@map("users")
 }
 
-model User {
-  id        String    @id @default(uuid())
-  email     String?   @unique
-  username  String?   @unique
-  password  String?
-  image     String?
-  provider  Provider
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
-  Like      Like[]
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Track {
   id             String    @id
   title          String
-  coverSmall     String?
-  coverBig       String?
+  coverSmall     String?   @map("cover_small")
+  coverBig       String?   @map("cover_big")
   preview        String?
-  artistSourceId Int?
-  artistName     String?
-  albumSourceId  Int?
-  albumTitle     String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime? @updatedAt
+  artistSourceId Int?      @map("artist_source_id")
+  artistName     String?   @map("artist_name")
+  albumSourceId  Int?      @map("album_source_id")
+  albumTitle     String?   @map("album_title")
+  created_at     DateTime  @default(now())
+  updated_at     DateTime? @updatedAt
   Like           Like[]
+
+  @@map("tracks")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Like {
-  id        Int       @id @default(autoincrement())
-  userId    String
-  trackId   String
-  user      User      @relation(fields: [userId], references: [id])
-  track     Track     @relation(fields: [trackId], references: [id])
-  isDislike Boolean?  @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  id         Int       @id @default(autoincrement())
+  userId     String    @map("user_id")
+  trackId    String    @map("track_id")
+  user       User      @relation(fields: [userId], references: [id])
+  track      Track     @relation(fields: [trackId], references: [id])
+  isDislike  Boolean?  @default(false) @map("is_dislike")
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
 
   @@unique([userId, trackId])
+  @@map("likes")
 }

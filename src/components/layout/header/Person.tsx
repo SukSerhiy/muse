@@ -14,7 +14,9 @@ const Person = () => {
   const session = useSession();
   const [open, setOpen] = useState(false);
 
-  const { update } = session;
+  const { update, data } = session;
+
+  const { image } = data?.user || {};
 
   const handleLogout = async () => {
     try {
@@ -29,10 +31,10 @@ const Person = () => {
     <Dropdown
       trigger={
         <div className="hover:bg-accent group flex cursor-pointer items-center gap-1 rounded-xl p-1">
-          <div className="ring-border relative h-12 w-12 overflow-hidden rounded-full ring-2">
+          <div className="relative h-12 w-12 overflow-hidden rounded-full">
             <div className="absolute inset-1 overflow-hidden rounded-full">
               <Image
-                src={imagePlug}
+                src={image || imagePlug}
                 alt="person"
                 fill
                 className="object-cover"

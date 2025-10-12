@@ -23,5 +23,42 @@
     "Header": {
       "login": "Log in"
     }
+  },
+  "SignUp": {
+    "title": "Sign Up",
+    "Form": {
+      "Fields": {
+        "Email": {
+          "title": "Email",
+          "placeholder": "Enter your email..."
+        },
+        "Password": {
+          "title": "Password",
+          "placeholder": "Enter your password..."
+        },
+        "ConfirmPassword": {
+          "title": "Confirm password",
+          "placeholder": "Re-Enter your password..."
+        }
+      },
+      "SubmitBtn": {
+        "title": "Sign up",
+        "loading": "Sending..."
+      }
+    },
+    "if_you_have_account": "If you don't have an account, please",
+    "sign_in": "Sign in",
+    "success": "Sign Up Successfully Completed!"
+  },
+  "Errors": {
+    "email_is_already_in_use": "This email is already in use",
+    "Validation": {
+      "email_is_required": "Email is required",
+      "password_is_required": "Password is required",
+      "password_length": "Password must contain at least 8 characters",
+      "password_format": "Password must be at least 8 characters long and include uppercase, lowercase, number and special character.",
+      "confirm_password_required": "Password confirmation is required",
+      "passwords_do_not_match": "Passwords do not match"
+    }
   }
 }

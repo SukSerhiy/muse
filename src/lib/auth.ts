@@ -1,4 +1,4 @@
-import { Provider } from '@prisma/client';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import { compare } from 'bcrypt';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -16,6 +16,7 @@ export const {
   session: {
     strategy: 'jwt',
   },
+  adapter: PrismaAdapter(db),
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
@@ -43,7 +44,7 @@ export const {
 
           return {
             id: String(user.id),
-            name: user.username,
+            name: user.name,
             email: user.email,
             image: null,
           };
@@ -79,19 +80,7 @@ export const {
   ],
   // debug: true,
   callbacks: {
-    async signIn({ user, account }) {
-      const { provider } = account || {};
-      if (provider !== 'credentials') {
-        await db.user.create({
-          data: {
-            id: user.id,
-            username: user.name,
-            email: user.email,
-            image: user.image,
-            provider: provider?.toUpperCase() as Provider,
-          },
-        });
-      }
+    async signIn() {
       return true;
     },
     async jwt({ token, user }) {

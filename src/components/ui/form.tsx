@@ -2,6 +2,7 @@
 
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
+import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import {
   Controller,
@@ -22,8 +23,8 @@ type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
-  name: TName
-}
+  name: TName;
+};
 
 const FormFieldContext = React.createContext<FormFieldContextValue>(
   {} as FormFieldContextValue
@@ -66,8 +67,8 @@ const useFormField = () => {
 };
 
 type FormItemContextValue = {
-  id: string
-}
+  id: string;
+};
 
 const FormItemContext = React.createContext<FormItemContextValue>(
   {} as FormItemContextValue
@@ -105,7 +106,8 @@ function FormLabel({
 }
 
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  const { error, formItemId, formDescriptionId, formMessageId } =
+    useFormField();
 
   return (
     <Slot
@@ -138,6 +140,7 @@ function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
 function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message ?? '') : props.children;
+  const t = useTranslations();
 
   if (!body) {
     return null;
@@ -150,7 +153,7 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
       className={cn('text-destructive text-sm', className)}
       {...props}
     >
-      {body}
+      {t(`Errors.${body}`)}
     </p>
   );
 }

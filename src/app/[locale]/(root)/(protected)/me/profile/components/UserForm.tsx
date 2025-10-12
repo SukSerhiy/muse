@@ -26,7 +26,7 @@ const UserForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      name: '',
       gender: null,
       dateOfBirth: null,
       country: null,
@@ -60,8 +60,8 @@ const UserForm = () => {
   const onSubmit = handleSubmit(async (values) => {
     // if (!isValid) return;
     // const formData = new FormData();
-    // const { username, email, password } = values;
-    // formData.append('username', username);
+    // const { name, email, password } = values;
+    // formData.append('name', name);
     // formData.append('email', email);
     // formData.append('password', password);
     // action(formData);
@@ -73,8 +73,8 @@ const UserForm = () => {
         <div className="space-y-2">
           <FormField
             control={form.control}
-            name="username"
-            defaultValue={state.fields?.username}
+            name="name"
+            defaultValue={state.fields?.name}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Username</FormLabel>

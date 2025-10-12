@@ -26,12 +26,12 @@ export async function signUp(
   const raw = Object.fromEntries(formData.entries());
 
   const data = {
-    username: String(raw.username ?? ''),
+    name: String(raw.name ?? ''),
     email: String(raw.email ?? ''),
     password: String(raw.password ?? ''),
   };
 
-  const { username, email, password } = data;
+  const { email, password } = data;
 
   const result = signUpSchema.safeParse(data);
 
@@ -44,19 +44,6 @@ export async function signUp(
     return { success: false, errors: fieldErrors };
   }
 
-  const userByUsername = await db.user.findUnique({
-    where: { username },
-  });
-
-  if (userByUsername) {
-    return {
-      success: false,
-      errors: {
-        username: 'this_email_is_already_in_use',
-      },
-    };
-  }
-
   const userByEmail = await db.user.findUnique({
     where: { email },
   });
@@ -65,7 +52,7 @@ export async function signUp(
     return {
       success: false,
       errors: {
-        email: 'this_email_is_already_in_use',
+        email: 'email_is_already_in_use',
       },
     };
   }
@@ -74,10 +61,9 @@ export async function signUp(
 
   await db.user.create({
     data: {
-      username: data.username,
+      name: data.name,
       password: hashedPassword,
       email: data.email,
-      provider: 'CREDENTIALS',
     },
   });
 

@@ -1,12 +1,16 @@
+import { getTranslations } from 'next-intl/server';
+
 import SignUpForm from './components/SignUpForm';
 
-const page = () => {
+export default async function Page() {
+  const t = await getTranslations();
+
   return (
     <div className="mx-auto w-xl">
-      <h1 className="mb-2 text-center text-2xl font-semibold">Sign Up</h1>
+      <h1 className="mb-2 text-center text-2xl font-semibold">
+        {t('SignUp.title')}
+      </h1>
       <SignUpForm />
     </div>
   );
-};
-
-export default page;
+}
