@@ -10,7 +10,7 @@ import { signUpSchema } from '@/lib/validation';
 
 export async function doSocialLogin(formData: FormData) {
   const action = formData.get('action');
-  await signIn(action as ProviderId, { redirectTo: '/home' });
+  await signIn(action as ProviderId, { redirectTo: '/' });
 }
 
 type FormState = {

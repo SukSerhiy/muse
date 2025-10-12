@@ -1,14 +1,40 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { signInSchema as formSchema } from '@/lib/validation';
 
 import SocialLogin from './SocialLogin';
 
 const LoginForm = () => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const { handleSubmit } = form;
+
   const router = useRouter();
 
-  const [error, setError] = useState('');
+  const [serverError, setServerError] = useState('');
 
   const { update } = useSession();
 
@@ -25,52 +51,71 @@ const LoginForm = () => {
 
       if (response.error) {
         console.error(response.error);
-        setError(response.error);
+        setServerError(response.error);
       } else {
         update();
-        router.push('/home');
+        router.push('/');
       }
     } catch (e: unknown) {
-      setError('Check your Credentials');
+      setServerError('Check your Credentials');
       console.error(e);
     }
   }
 
+  const onSubmit = handleSubmit(async (values) => {
+    // if (!isValid) return;
+    const formData = new FormData();
+    const { email, password } = values;
+    formData.append('email', email);
+    formData.append('password', password);
+    // action(formData);
+  });
+
   return (
     <>
-      <div className="text-xl text-red-500">{error}</div>
-      <form
-        className="my-5 flex flex-col items-center rounded-md border border-gray-200 p-3"
-        onSubmit={handleFormSubmit}
-      >
-        <div className="my-2">
-          <label htmlFor="email">Email Address</label>
-          <input
-            className="mx-2 rounded border border-gray-500"
-            type="email"
-            name="email"
-            id="email"
-          />
+      <Form {...form}>
+        <form onSubmit={handleFormSubmit} className="w-full">
+          <div className="space-y-2">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Enter your password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </form>
+        <div className="my-2 flex items-center justify-center">
+          <SocialLogin />
         </div>
-
-        <div className="my-2">
-          <label htmlFor="password">Password</label>
-          <input
-            className="mx-2 rounded border border-gray-500"
-            type="password"
-            name="password"
-            id="password"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="mt-4 flex w-36 items-center justify-center rounded bg-orange-300"
-        >
-          Ceredential Login
-        </button>
-      </form>
-      <SocialLogin />
+        <Button className="w-full" type="submit">
+          Sign in
+        </Button>
+      </Form>
+      <div className="text-xl text-red-500">{serverError}</div>
     </>
   );
 };
