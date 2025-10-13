@@ -7,7 +7,6 @@ import { APP_NAME } from '@/lib/constants';
 
 import HeroAuth from './HeroAuth';
 import HeroObserver from './HeroObserver';
-import HeroOverlay from './HeroOverlay';
 
 const HeroSection = async () => {
   const t = await getTranslations();
@@ -17,7 +16,7 @@ const HeroSection = async () => {
       id="hero"
       className="relative flex min-h-dvh flex-col bg-cover px-3 py-3"
     >
-      <HeroOverlay />
+      <div className="pointer-events-none absolute inset-0 backdrop-filter-[var(--hero-filter)]" />
       <div className="flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <Image
@@ -55,7 +54,7 @@ const HeroSection = async () => {
         <h1 className="mb-24 text-center text-6xl font-bold">
           {t('MainPage.Hero.title')}
         </h1>
-        <p className="w-full text-justify text-xl md:w-2/3 lg:w-1/3">
+        <p className="w-full text-justify text-xl font-medium md:w-2/3 lg:w-1/3">
           {t('MainPage.Hero.description')}
         </p>
       </div>
