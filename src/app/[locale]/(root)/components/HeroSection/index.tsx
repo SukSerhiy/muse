@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { ModeToggle } from '@/components/layout/header';
+import { auth } from '@/lib/auth';
 import { APP_NAME } from '@/lib/constants';
 
 import HeroAuth from './HeroAuth';
@@ -10,6 +11,7 @@ import HeroObserver from './HeroObserver';
 
 const HeroSection = async () => {
   const t = await getTranslations();
+  const session = await auth();
 
   return (
     <section
@@ -58,6 +60,14 @@ const HeroSection = async () => {
           {t('MainPage.Hero.description')}
         </p>
       </div>
+      {!session && (
+        <Link
+          href="/sign-up"
+          className="text-md bg-secondary relative bottom-8 w-1/2 self-center rounded-2xl py-2.5 text-center shadow-2xl md:w-1/4"
+        >
+          {t('MainPage.Hero.sign_up')}
+        </Link>
+      )}
     </section>
   );
 };

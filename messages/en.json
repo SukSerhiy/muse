@@ -2,7 +2,8 @@
   "MainPage": {
     "Hero": {
       "title": "Welcome to Muse!",
-      "description": "Our website is your personal music guide that adapts to your taste and mood. It gives you access to millions of tracks and playlists, helps you discover new artists, and create unique collections just for you. With smart recommendations and an easy-to-use search, listening becomes effortless and inspiring — the right music is always by your side."
+      "description": "Our website is your personal music guide that adapts to your taste and mood. It gives you access to millions of tracks and playlists, helps you discover new artists, and create unique collections just for you. With smart recommendations and an easy-to-use search, listening becomes effortless and inspiring — the right music is always by your side.",
+      "sign_up": "Sign Up"
     },
     "Albums": {
       "title": "Albums"
