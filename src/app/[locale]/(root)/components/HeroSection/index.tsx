@@ -7,12 +7,17 @@ import { APP_NAME } from '@/lib/constants';
 
 import HeroAuth from './HeroAuth';
 import HeroObserver from './HeroObserver';
+import HeroOverlay from './HeroOverlay';
 
 const HeroSection = async () => {
   const t = await getTranslations();
 
   return (
-    <section id="hero" className="flex min-h-dvh flex-col bg-cover px-3 py-3">
+    <section
+      id="hero"
+      className="relative flex min-h-dvh flex-col bg-cover px-3 py-3"
+    >
+      <HeroOverlay />
       <div className="flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <Image

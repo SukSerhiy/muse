@@ -35,7 +35,7 @@ const CustomDialog: FC<Props> = ({
       }}
     >
       {trigger && <DialogTrigger>{trigger}</DialogTrigger>}
-      <DialogContent>
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
         {(title || description) && (
           <DialogHeader>
             {title && <DialogTitle>{title}</DialogTitle>}
