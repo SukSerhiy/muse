@@ -1,24 +1,30 @@
 'use client';
 
-import { FC, ReactNode, useEffect } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 type Props = {
   children: ReactNode[] | ReactNode;
   onChange?: (isView: boolean) => void;
   animate?: boolean;
-  threshold?: number;
 };
 
-const ObserverWrapper: FC<Props> = ({
-  children,
-  onChange,
-  animate,
-  threshold = 0.3,
-}) => {
+const ObserverWrapper: FC<Props> = ({ children, onChange, animate }) => {
+  const [threshold, setThreshold] = useState(0.3);
+
   const { ref, inView } = useInView({ threshold, triggerOnce: true });
 
   useEffect(() => {
+    const updateThreshold = () => {
+      setThreshold(window.innerWidth < 768 ? 0.1 : 0.3);
+    };
+    updateThreshold();
+    window.addEventListener('resize', updateThreshold);
+    return () => window.removeEventListener('resize', updateThreshold);
+  }, []);
+
+  useEffect(() => {
+    console.log('inView:', inView);
     onChange?.(inView);
   }, [inView, onChange]);
 
