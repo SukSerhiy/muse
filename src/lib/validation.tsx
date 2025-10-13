@@ -1,5 +1,7 @@
 import * as z from 'zod';
 
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[^\s]{8,}$/;
+
 export const signInSchema = z.object({
   email: z
     .string()
@@ -9,10 +11,7 @@ export const signInSchema = z.object({
     .string()
     .min(1, 'Validation.password_is_required')
     .min(8, 'Validation.password_length')
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      'Validation.password_format'
-    ),
+    .regex(PASSWORD_REGEX, 'Validation.password_format'),
 });
 
 export const signUpSchema = z.object({
@@ -23,10 +22,7 @@ export const signUpSchema = z.object({
     .string()
     .min(1, 'Validation.password_is_required')
     .min(8, 'Validation.password_length')
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      'Validation.password_format'
-    ),
+    .regex(PASSWORD_REGEX, 'Validation.password_format'),
 });
 
 export const editProfileSchema = z.object({
