@@ -1,3 +1,5 @@
+'use client';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 
 import { doSocialLogin } from '@/app/actions/auth.actions';
@@ -5,6 +7,12 @@ const GoogleIcon = '/icons/google.svg';
 const GithubIcon = '/icons/github.svg';
 
 const SocialLogins = () => {
+  const { theme } = useTheme();
+
+  const isDark = theme === 'dark';
+
+  console.log('theme', theme);
+
   return (
     <form action={doSocialLogin}>
       <button
@@ -18,7 +26,7 @@ const SocialLogins = () => {
           width={40}
           height={40}
           alt="google"
-          style={{ height: '100%' }}
+          className={`h-full filter-[invert(${isDark ? 1 : 0})]`}
         />
       </button>
 
@@ -33,7 +41,7 @@ const SocialLogins = () => {
           width={40}
           height={40}
           alt="github"
-          style={{ height: '100%' }}
+          className={`h-full filter-[invert(${isDark ? 1 : 0})]`}
         />
       </button>
     </form>
