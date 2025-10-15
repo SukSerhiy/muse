@@ -26,9 +26,9 @@ export const signUpSchema = z.object({
 });
 
 export const editProfileSchema = z.object({
-  name: z.string().min(1, 'Username is required').max(100),
+  name: z.string().max(100, 'Validation.username_is_too_long').nullable(),
   gender: z.enum(['male', 'female', 'other']).nullable(),
-  dateOfBirth: z.date().optional().nullable(),
+  dob: z.date().optional().nullable(),
   country: z.string().optional().nullable(),
   bio: z.string().optional().nullable(),
 });
