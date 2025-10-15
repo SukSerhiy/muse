@@ -281,7 +281,7 @@ const UserForm: FC<UserFormProps> = ({ user }) => {
             className="mt-6 w-full flex-1"
             type="submit"
           >
-            {isLoadingState ? 'Sending...' : 'Sign up'}
+            {isLoadingState ? 'Sending...' : 'Save'}
           </Button>
         </div>
       </form>
