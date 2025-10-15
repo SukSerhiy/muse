@@ -1,42 +1,63 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import { useActionState, useEffect } from 'react';
+import { User } from '@prisma/client';
+import { PopoverContent } from '@radix-ui/react-popover';
+import { format } from 'date-fns';
+import { CalendarIcon, X } from 'lucide-react';
+import { FC, useActionState, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import countryList from 'react-select-country-list';
 import { toast } from 'sonner';
 import * as z from 'zod';
 
-import { signUp } from '@/app/actions/auth.actions';
+import { editProfile } from '@/app/actions/profile.actions';
+import Select from '@/components/shared/Select';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Popover, PopoverTrigger } from '@/components/ui/popover';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Textarea } from '@/components/ui/textarea';
+import { Gender } from '@/lib/types';
+import { cn } from '@/lib/utils';
 import { editProfileSchema as formSchema } from '@/lib/validation';
 
-const UserForm = () => {
+type UserFormProps = {
+  user: User;
+};
+
+const UserForm: FC<UserFormProps> = ({ user }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      gender: null,
-      dateOfBirth: null,
-      country: null,
-      bio: null,
+      name: user.name ?? '',
+      gender: (user.gender as Gender) ?? null,
+      dob: user.dob ? new Date(user.dob) : null,
+      country: user.country ?? null,
+      bio: user.bio ?? '',
     },
   });
 
-  const { handleSubmit, setError, reset } = form;
+  const options = useMemo(() => countryList().getData(), []).map(
+    ({ value, label }) => ({
+      value,
+      renderItem: label,
+    })
+  );
 
-  const [state, action, isLoadingState] = useActionState(signUp, {
+  const { handleSubmit, setError, reset, resetField } = form;
+
+  const [state, action, isLoadingState] = useActionState(editProfile, {
     success: false,
   });
 
@@ -52,24 +73,27 @@ const UserForm = () => {
       }
       if (state.success) {
         reset();
-        toast('Sign Up Successfully Completed!');
+        toast('Profile successfully edited');
       }
     }
   }, [state, isLoadingState, setError, reset]);
 
-  const onSubmit = handleSubmit(async (values) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // if (!isValid) return;
-    // const formData = new FormData();
-    // const { name, email, password } = values;
-    // formData.append('name', name);
-    // formData.append('email', email);
-    // formData.append('password', password);
-    // action(formData);
-  });
+    const formData = new FormData();
+    const { name, dob, country, gender, bio } = values;
+    if (name != null) formData.append('name', name);
+    if (gender != null) formData.append('gender', gender);
+    if (dob != null) formData.append('dob', dob.toISOString());
+    if (country != null) formData.append('country', country);
+    if (bio != null) formData.append('bio', bio);
+
+    action(formData);
+  };
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="w-full">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         <div className="space-y-2">
           <FormField
             control={form.control}
@@ -79,7 +103,11 @@ const UserForm = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your nickname..." {...field} />
+                  <Input
+                    placeholder="Enter your nickname..."
+                    {...field}
+                    value={field.value ?? ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -91,7 +119,7 @@ const UserForm = () => {
             name="gender"
             render={({ field }) => (
               <FormItem className="space-y-3">
-                <FormLabel>Notify me about...</FormLabel>
+                <FormLabel>Gender</FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={(val) =>
@@ -100,31 +128,37 @@ const UserForm = () => {
                     defaultValue={field.value ?? 'not_specified'}
                     className="flex flex-col"
                   >
-                    <FormItem className="flex items-center gap-3">
+                    <FormItem className="flex w-fit cursor-pointer items-center gap-3">
                       <FormControl>
                         <RadioGroupItem value="not_specified" />
                       </FormControl>
-                      <FormLabel className="font-normal">
+                      <FormLabel className="cursor-pointer font-normal">
                         Not specified
                       </FormLabel>
                     </FormItem>
-                    <FormItem className="flex items-center gap-3">
+                    <FormItem className="flex w-fit cursor-pointer items-center gap-3">
                       <FormControl>
                         <RadioGroupItem value="male" />
                       </FormControl>
-                      <FormLabel className="font-normal">Male</FormLabel>
+                      <FormLabel className="cursor-pointer font-normal">
+                        Male
+                      </FormLabel>
                     </FormItem>
-                    <FormItem className="flex items-center gap-3">
+                    <FormItem className="flex w-fit cursor-pointer items-center gap-3">
                       <FormControl>
                         <RadioGroupItem value="female" />
                       </FormControl>
-                      <FormLabel className="font-normal">Female</FormLabel>
+                      <FormLabel className="cursor-pointer font-normal">
+                        Female
+                      </FormLabel>
                     </FormItem>
-                    <FormItem className="flex items-center gap-3">
+                    <FormItem className="flex w-fit cursor-pointer items-center gap-3">
                       <FormControl>
                         <RadioGroupItem value="other" />
                       </FormControl>
-                      <FormLabel className="font-normal">Other</FormLabel>
+                      <FormLabel className="cursor-pointer font-normal">
+                        Other
+                      </FormLabel>
                     </FormItem>
                   </RadioGroup>
                 </FormControl>
@@ -135,16 +169,78 @@ const UserForm = () => {
 
           <FormField
             control={form.control}
+            name="dob"
+            render={({ field }) => {
+              return (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Date of birth</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <div className="flex gap-1">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className={cn(
+                              'w-[240px] pl-3 text-left font-normal',
+                              !field.value && 'text-muted-foreground'
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, 'PPP')
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <div className="ml-auto flex items-center gap-1 opacity-50">
+                              <CalendarIcon className="h-4 w-4" />
+                            </div>
+                          </Button>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              resetField('dob');
+                            }}
+                          >
+                            <X className="ml-auto h-4 w-4" />
+                          </button>
+                        </div>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value || undefined}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date('1900-01-01')
+                        }
+                        captionLayout="dropdown"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    Your date of birth is used to calculate your age.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+
+          <FormField
+            control={form.control}
             name="country"
             defaultValue={state.fields?.country}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Country</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Enter your country..."
+                  <Select
                     {...field}
                     value={field.value ?? ''}
+                    options={options}
+                    placeholder="Enter your country..."
+                    className="w-full"
                   />
                 </FormControl>
                 <FormMessage />
@@ -160,7 +256,7 @@ const UserForm = () => {
               <FormItem>
                 <FormLabel>Bio</FormLabel>
                 <FormControl>
-                  <Input
+                  <Textarea
                     placeholder="Enter something about yourself..."
                     {...field}
                     value={field.value ?? ''}
@@ -171,19 +267,24 @@ const UserForm = () => {
             )}
           />
         </div>
-        <Button disabled={isLoadingState} className="mt-6 w-full" type="submit">
-          {isLoadingState ? 'Sending...' : 'Sign up'}
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button
+            variant="outline"
+            className="mt-6 w-full flex-1"
+            type="button"
+            onClick={() => reset()}
+          >
+            Cancel
+          </Button>
+          <Button
+            disabled={isLoadingState}
+            className="mt-6 w-full flex-1"
+            type="submit"
+          >
+            {isLoadingState ? 'Sending...' : 'Sign up'}
+          </Button>
+        </div>
       </form>
-      <div className="mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400">
-        or
-      </div>
-      <p className="mt-2 text-center text-sm text-gray-600">
-        If you don&apos;t have an account, please&nbsp;
-        <Link className="text-blue-500 hover:underline" href="/sign-in">
-          Sign in
-        </Link>
-      </p>
     </Form>
   );
 };

@@ -26,7 +26,6 @@ export async function signUp(
   const raw = Object.fromEntries(formData.entries());
 
   const data = {
-    name: String(raw.name ?? ''),
     email: String(raw.email ?? ''),
     password: String(raw.password ?? ''),
   };
@@ -61,7 +60,6 @@ export async function signUp(
 
   await db.user.create({
     data: {
-      name: data.name,
       password: hashedPassword,
       email: data.email,
     },

@@ -71,6 +71,9 @@
       }
     }
   },
+  "EditProfile": {
+    "title": "Edit Profile"
+  },
   "Errors": {
     "email_is_already_in_use": "This email is already in use",
     "invalid_credentials": "Invalid email or password",
@@ -82,7 +85,8 @@
       "password_length": "Password must contain at least 8 characters",
       "password_format": "Password must be at least 8 characters long and include uppercase, lowercase, number and special character.",
       "confirm_password_required": "Password confirmation is required",
-      "passwords_do_not_match": "Passwords do not match"
+      "passwords_do_not_match": "Passwords do not match",
+      "username_is_too_long": "Username is too long"
     }
   }
 }
